@@ -6,9 +6,12 @@
                 <v-card class="pa-4">
                     <div class="text-center">
                         <v-avatar size="100" color="indigo lighten-4">
-                            <v-icon size="40" color="indigo">mdi-account</v-icon>
+                            <v-img
+                                aspect-ratio="30"
+                                :src="require('../assets/logo.svg')"
+                            />
                         </v-avatar>
-                        <h2 class="indigo--text">Vue login Page</h2>
+                        <h2 class="indigo--text">Rappi Farma</h2>
                     </div>
                     <v-form @submit.prevent="submitHandler"
                             ref="form"

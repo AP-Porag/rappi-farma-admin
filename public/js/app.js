@@ -5448,7 +5448,7 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Prerequisites',
         subLinks: [{
           id: "3-1",
-          path: 'about',
+          path: 'category',
           title: 'Category'
         }, {
           id: "3-2",
@@ -5491,14 +5491,14 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         id: 9,
         icon: 'mdi-cog',
-        title: 'Web settings',
+        title: 'Content Management',
         subLinks: [{
           id: "9-1",
           path: 'about',
           title: 'Home page settings'
         }, {
           id: "9-2",
-          path: 'review-registration',
+          path: '',
           title: 'Category settings'
         }]
       }]
@@ -5852,6 +5852,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6097,6 +6100,8 @@ __webpack_require__.r(__webpack_exports__);
 var Dashboard = function Dashboard() {
   return __webpack_require__.e(/*! import() */ "resources_js_views_Dashboard_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/Dashboard.vue */ "./resources/js/views/Dashboard.vue"));
 };
+
+//user components
 var UserProfile = function UserProfile() {
   return __webpack_require__.e(/*! import() */ "resources_js_views_user_Profile_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/user/Profile.vue */ "./resources/js/views/user/Profile.vue"));
 };
@@ -6108,6 +6113,17 @@ var UserCreate = function UserCreate() {
 };
 var UserEdit = function UserEdit() {
   return __webpack_require__.e(/*! import() */ "resources_js_views_user_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/user/Edit.vue */ "./resources/js/views/user/Edit.vue"));
+};
+
+//category components
+var CategoryIndex = function CategoryIndex() {
+  return __webpack_require__.e(/*! import() */ "resources_js_views_category_Index_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/category/Index.vue */ "./resources/js/views/category/Index.vue"));
+};
+var CategoryCreate = function CategoryCreate() {
+  return __webpack_require__.e(/*! import() */ "resources_js_views_category_Create_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/category/Create.vue */ "./resources/js/views/category/Create.vue"));
+};
+var CategoryEdit = function CategoryEdit() {
+  return __webpack_require__.e(/*! import() */ "resources_js_views_category_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/category/Edit.vue */ "./resources/js/views/category/Edit.vue"));
 };
 vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
@@ -6172,6 +6188,27 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
         title: 'profile'
       },
       component: UserProfile
+    }, {
+      path: 'category',
+      name: 'category',
+      meta: {
+        title: 'category'
+      },
+      component: CategoryIndex
+    }, {
+      path: 'create-category',
+      name: 'create-category',
+      meta: {
+        title: 'Create category'
+      },
+      component: CategoryCreate
+    }, {
+      path: 'edit-category/:id',
+      name: 'edit-category',
+      meta: {
+        title: 'Edit category'
+      },
+      component: CategoryEdit
     }]
   }]
 });
@@ -11805,6 +11842,16 @@ module.exports = function (url, options) {
 /***/ ((module) => {
 
 module.exports = "/images/Order-Banner.jpg?13dbb3c2a8d9d191fb2f34d082867e71";
+
+/***/ }),
+
+/***/ "./resources/js/assets/logo.svg":
+/*!**************************************!*\
+  !*** ./resources/js/assets/logo.svg ***!
+  \**************************************/
+/***/ ((module) => {
+
+module.exports = "/images/logo.svg?9b5a3188ff3323755867e57edea0f2df";
 
 /***/ }),
 
@@ -30246,22 +30293,19 @@ var render = function () {
           [
             _c(
               "v-avatar",
-              {
-                staticClass: "mb-4",
-                attrs: { color: "grey darken-1", size: "64" },
-              },
+              { staticClass: "mb-4", attrs: { color: "light", size: "64" } },
               [
                 _c("v-img", {
                   attrs: {
                     "aspect-ratio": "30",
-                    src: "https://yt3.ggpht.com/esazPAO03T0f0vKdByJvkDy6MSwjyG5f-c_2S2CJapszQ3KPQyZarpoqvgv0Us0atUbILytj=s88-c-k-c0x00ffffff-no-rj",
+                    src: __webpack_require__(/*! ../assets/logo.svg */ "./resources/js/assets/logo.svg"),
                   },
                 }),
               ],
               1
             ),
             _vm._v(" "),
-            _c("h2", { staticClass: "indigo--text" }, [_vm._v("Some thing")]),
+            _c("h2", { staticClass: "indigo--text" }, [_vm._v("Rappi Farma")]),
           ],
           1
         ),
@@ -30339,7 +30383,7 @@ var render = function () {
                         return _c(
                           "v-list-item",
                           {
-                            key: i,
+                            key: item.id,
                             attrs: { link: "" },
                             on: {
                               click: function ($event) {
@@ -30833,17 +30877,18 @@ var render = function () {
                         "v-avatar",
                         { attrs: { size: "100", color: "indigo lighten-4" } },
                         [
-                          _c(
-                            "v-icon",
-                            { attrs: { size: "40", color: "indigo" } },
-                            [_vm._v("mdi-account")]
-                          ),
+                          _c("v-img", {
+                            attrs: {
+                              "aspect-ratio": "30",
+                              src: __webpack_require__(/*! ../assets/logo.svg */ "./resources/js/assets/logo.svg"),
+                            },
+                          }),
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c("h2", { staticClass: "indigo--text" }, [
-                        _vm._v("Vue login Page"),
+                        _vm._v("Rappi Farma"),
                       ]),
                     ],
                     1
@@ -93509,7 +93554,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Dashboard_vue":1,"resources_js_views_user_Profile_vue":1,"resources_js_views_user_Index_vue":1,"resources_js_views_user_Create_vue":1,"resources_js_views_user_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Dashboard_vue":1,"resources_js_views_user_Profile_vue":1,"resources_js_views_user_Index_vue":1,"resources_js_views_user_Create_vue":1,"resources_js_views_user_Edit_vue":1,"resources_js_views_category_Index_vue":1,"resources_js_views_category_Create_vue":1,"resources_js_views_category_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

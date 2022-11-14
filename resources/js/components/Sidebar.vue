@@ -5,13 +5,13 @@
       class="pa-4 bg"
     >
       <div class="text-center">
-        <v-avatar class="mb-4" color="grey darken-1" size="64">
+        <v-avatar class="mb-4" color="light" size="64">
           <v-img
             aspect-ratio="30"
-            src="https://yt3.ggpht.com/esazPAO03T0f0vKdByJvkDy6MSwjyG5f-c_2S2CJapszQ3KPQyZarpoqvgv0Us0atUbILytj=s88-c-k-c0x00ffffff-no-rj"
+            :src="require('../assets/logo.svg')"
           />
         </v-avatar>
-        <h2 class="indigo--text">Some thing</h2>
+        <h2 class="indigo--text">Rappi Farma</h2>
       </div>
     </div>
     <v-divider></v-divider>
@@ -42,7 +42,7 @@
 
                 <v-list-item
                     v-for="item in link.subLinks"
-                    :key="i"
+                    :key="item.id"
                     @click="$router.push({ name: item.path })"
                     link
                 >
@@ -93,7 +93,7 @@ export default {
               subLinks: [
                   {
                       id:"3-1",
-                      path:'about',
+                      path:'category',
                       title: 'Category',
                   },
                   {
@@ -121,7 +121,7 @@ export default {
           {
               id:9,
               icon:'mdi-cog',
-              title:'Web settings',
+              title:'Content Management',
               subLinks: [
                   {
                       id:"9-1",
@@ -130,7 +130,7 @@ export default {
                   },
                   {
                       id:"9-2",
-                      path: 'review-registration',
+                      path: '',
                       title: 'Category settings',
                   },
               ],

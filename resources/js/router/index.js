@@ -9,10 +9,17 @@ import About from "../views/About";
 // const Login = () => import('../views/Dashboard.vue')
 // const Home = () => import('../views/Dashboard.vue')
 const Dashboard = () => import('../views/Dashboard.vue')
+
+//user components
 const UserProfile = () => import('../views/user/Profile.vue')
 const UserIndex = () => import('../views/user/Index.vue')
 const UserCreate = () => import('../views/user/Create.vue')
 const UserEdit = () => import('../views/user/Edit.vue')
+
+//category components
+const CategoryIndex = () => import('../views/category/Index.vue')
+const CategoryCreate = () => import('../views/category/Create.vue')
+const CategoryEdit = () => import('../views/category/Edit.vue')
 
 Vue.use(vueRouter);
 
@@ -78,6 +85,24 @@ const router = new vueRouter({
                     name:'profile',
                     meta:{title:'profile'},
                     component: UserProfile
+                },
+                {
+                    path:'category',
+                    name:'category',
+                    meta:{title:'category'},
+                    component: CategoryIndex
+                },
+                {
+                    path:'create-category',
+                    name:'create-category',
+                    meta:{title:'Create category'},
+                    component: CategoryCreate
+                },
+                {
+                    path:'edit-category/:id',
+                    name:'edit-category',
+                    meta:{title:'Edit category'},
+                    component: CategoryEdit
                 },
 
             ],
