@@ -142,30 +142,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Create",
   components: {
-    'thumbnail-upload': vue_image_crop_upload_upload_2__WEBPACK_IMPORTED_MODULE_0__["default"],
-    'banner-upload': vue_image_crop_upload_upload_2__WEBPACK_IMPORTED_MODULE_0__["default"]
+    'thumbnail-upload': vue_image_crop_upload_upload_2__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
@@ -177,15 +159,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       loading: false,
       message: '',
       status: ['active', 'in-active'],
+      categories: [],
       thumbnail_image_upload: false,
       banner_image_upload: false,
       //options:["nav-menu","scroller","footer"],
       form_data: {
+        category_id: '',
         name: '',
         status: '',
-        //show_in:[],
-        thumbnail_image: '',
-        banner_image: ''
+        thumbnail_image: ''
       },
       rules: {
         name: [function (v) {
@@ -197,8 +179,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         thumbnail_image: [function (v) {
           return !!v || 'Thumbnail is required';
         }],
-        banner_image: [function (v) {
-          return !!v || 'Banner is required';
+        category_id: [function (v) {
+          return !!v || 'Category is required';
         }]
       }
     };
@@ -217,16 +199,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
       //console.log(this.form_data.image)
     },
-    toggleBannerImageUpload: function toggleBannerImageUpload() {
-      this.banner_image_upload = !this.banner_image_upload;
-    },
-    bannerCropSuccess: function bannerCropSuccess(imgDataUrl, field) {
-      this.form_data.banner_image = imgDataUrl;
-      if (this.banner_error =  true && this.form_data.banner_image != '') {
-        this.banner_error = false;
-      }
-      //console.log(this.form_data.image)
-    },
     submit: function submit() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -235,30 +207,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(_this.form_data.thumbnail_image == '' && _this.form_data.banner_image == '')) {
-                  _context.next = 4;
-                  break;
-                }
-                _this.thumbnail_error = true;
-                _this.banner_error = true;
-                return _context.abrupt("return");
-              case 4:
                 if (!(_this.form_data.thumbnail_image == '')) {
-                  _context.next = 7;
+                  _context.next = 3;
                   break;
                 }
                 _this.thumbnail_error = true;
                 return _context.abrupt("return");
-              case 7:
-                if (!(_this.form_data.banner_image == '')) {
-                  _context.next = 10;
-                  break;
-                }
-                _this.banner_error = true;
-                return _context.abrupt("return");
-              case 10:
+              case 3:
                 if (!_this.valid) {
-                  _context.next = 18;
+                  _context.next = 11;
                   break;
                 }
                 // Add a request interceptor
@@ -285,8 +242,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return Promise.reject(error);
                 });
                 token = JSON.parse(window.localStorage.getItem('token'));
-                _context.next = 16;
-                return axios.post('/api/category', _this.form_data, {
+                _context.next = 9;
+                return axios.post('/api/brand', _this.form_data, {
                   headers: {
                     'Authorization': 'Bearer ' + token
                   }
@@ -303,17 +260,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.message = 'Something went wrong !';
                   _this.error = true;
                 });
-              case 16:
-                _context.next = 20;
+              case 9:
+                _context.next = 13;
                 break;
-              case 18:
+              case 11:
                 _this.loading = true;
                 setTimeout(function () {
                   _this.loading = false;
                   _this.message = 'Validation error !';
                   _this.error = true;
                 }, 3000);
-              case 20:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -350,23 +307,13 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n@charset \"UTF-8\";\n@keyframes vicp
 
 /***/ }),
 
-/***/ "./resources/js/assets/banner-default.jpeg":
-/*!*************************************************!*\
-  !*** ./resources/js/assets/banner-default.jpeg ***!
-  \*************************************************/
+/***/ "./resources/js/assets/default_image.png":
+/*!***********************************************!*\
+  !*** ./resources/js/assets/default_image.png ***!
+  \***********************************************/
 /***/ ((module) => {
 
-module.exports = "/images/banner-default.jpeg?964daff3d0ebb1eaf0511e9abb1b1f3d";
-
-/***/ }),
-
-/***/ "./resources/js/assets/thumbnail-default.png":
-/*!***************************************************!*\
-  !*** ./resources/js/assets/thumbnail-default.png ***!
-  \***************************************************/
-/***/ ((module) => {
-
-module.exports = "/images/thumbnail-default.png?a9100e5c7c047094da5a732949c743d0";
+module.exports = "/images/default_image.png?b929c729219341b0af46d0004b9717f3";
 
 /***/ }),
 
@@ -2599,75 +2546,13 @@ var render = function () {
                 },
               },
             },
-            [_vm._v("\n                All Categories\n            ")]
+            [_vm._v("\n            All Brands\n        ")]
           ),
         ],
         1
       ),
       _vm._v(" "),
       _c("br"),
-      _vm._v(" "),
-      _c(
-        "v-row",
-        [
-          _c(
-            "v-col",
-            { attrs: { cols: "12", md: "12" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "mx-auto" },
-                [
-                  _c(
-                    "v-img",
-                    {
-                      staticClass: "white--text align-end",
-                      attrs: {
-                        height: "200px",
-                        src: _vm.form_data.banner_image
-                          ? _vm.form_data.banner_image
-                          : __webpack_require__(/*! ../../assets/banner-default.jpeg */ "./resources/js/assets/banner-default.jpeg"),
-                      },
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticStyle: {
-                            height: "80px",
-                            width: "80px",
-                            "border-radius": "50px",
-                            "margin-bottom": "15px",
-                            "margin-left": "15px",
-                          },
-                        },
-                        [
-                          _c("img", {
-                            staticStyle: {
-                              height: "80px",
-                              width: "80px",
-                              "border-radius": "50px",
-                            },
-                            attrs: {
-                              src: _vm.form_data.thumbnail_image
-                                ? _vm.form_data.thumbnail_image
-                                : __webpack_require__(/*! ../../assets/thumbnail-default.png */ "./resources/js/assets/thumbnail-default.png"),
-                              alt: "",
-                            },
-                          }),
-                        ]
-                      ),
-                    ]
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
       _vm._v(" "),
       _c(
         "v-row",
@@ -2692,9 +2577,9 @@ var render = function () {
                     },
                     [
                       _vm._v(
-                        "\n                        " +
+                        "\n                    " +
                           _vm._s(_vm.message) +
-                          "\n                    "
+                          "\n                "
                       ),
                     ]
                   ),
@@ -2713,9 +2598,9 @@ var render = function () {
                     },
                     [
                       _vm._v(
-                        "\n                        " +
+                        "\n                    " +
                           _vm._s(_vm.message) +
-                          "\n                    "
+                          "\n                "
                       ),
                     ]
                   ),
@@ -2747,70 +2632,158 @@ var render = function () {
                             [
                               _c(
                                 "v-col",
-                                { attrs: { cols: "12", md: "12" } },
+                                { attrs: { cols: "12", md: "6" } },
                                 [
                                   _c(
                                     "v-row",
                                     [
                                       _c(
                                         "v-col",
-                                        { attrs: { cols: "12", md: "6" } },
+                                        { attrs: { cols: "12", md: "12" } },
                                         [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              rules: _vm.rules.name,
-                                              label: "Name",
-                                              required: "",
-                                              outlined: "",
-                                              clearable: "",
-                                            },
-                                            model: {
-                                              value: _vm.form_data.name,
-                                              callback: function ($$v) {
-                                                _vm.$set(
-                                                  _vm.form_data,
-                                                  "name",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "form_data.name",
-                                            },
-                                          }),
+                                          _c(
+                                            "v-row",
+                                            [
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "12",
+                                                  },
+                                                },
+                                                [
+                                                  _c("v-text-field", {
+                                                    attrs: {
+                                                      rules: _vm.rules.name,
+                                                      label: "Name",
+                                                      required: "",
+                                                      outlined: "",
+                                                      clearable: "",
+                                                    },
+                                                    model: {
+                                                      value: _vm.form_data.name,
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.form_data,
+                                                          "name",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form_data.name",
+                                                    },
+                                                  }),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "6",
+                                                  },
+                                                },
+                                                [
+                                                  _c("v-select", {
+                                                    attrs: {
+                                                      items: _vm.status,
+                                                      rules: _vm.rules.status,
+                                                      label: "Status",
+                                                      outlined: "",
+                                                      clearable: "",
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form_data.status,
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.form_data,
+                                                          "status",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form_data.status",
+                                                    },
+                                                  }),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "6",
+                                                  },
+                                                },
+                                                [
+                                                  _c("v-select", {
+                                                    attrs: {
+                                                      items: _vm.categories,
+                                                      rules:
+                                                        _vm.rules.category_id,
+                                                      label: "Category",
+                                                      outlined: "",
+                                                      clearable: "",
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form_data
+                                                          .category_id,
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.form_data,
+                                                          "category_id",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form_data.category_id",
+                                                    },
+                                                  }),
+                                                ],
+                                                1
+                                              ),
+                                            ],
+                                            1
+                                          ),
                                         ],
                                         1
                                       ),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", md: "6" } },
+                                [
+                                  _c(
+                                    "v-card",
+                                    {
+                                      staticClass: "mx-auto",
+                                      attrs: { "max-width": "300" },
+                                    },
+                                    [
+                                      _c("v-img", {
+                                        attrs: {
+                                          src: _vm.form_data.thumbnail_image
+                                            ? _vm.form_data.thumbnail_image
+                                            : __webpack_require__(/*! ../../assets/default_image.png */ "./resources/js/assets/default_image.png"),
+                                          height: "300px",
+                                        },
+                                      }),
                                       _vm._v(" "),
                                       _c(
-                                        "v-col",
-                                        { attrs: { cols: "12", md: "6" } },
-                                        [
-                                          _c("v-select", {
-                                            attrs: {
-                                              items: _vm.status,
-                                              rules: _vm.rules.status,
-                                              label: "Status",
-                                              outlined: "",
-                                              clearable: "",
-                                            },
-                                            model: {
-                                              value: _vm.form_data.status,
-                                              callback: function ($$v) {
-                                                _vm.$set(
-                                                  _vm.form_data,
-                                                  "status",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "form_data.status",
-                                            },
-                                          }),
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-col",
-                                        { attrs: { cols: "12", md: "6" } },
+                                        "v-card-actions",
                                         [
                                           _c("thumbnail-upload", {
                                             attrs: {
@@ -2855,7 +2828,7 @@ var render = function () {
                                                 [_vm._v("mdi-cloud-upload")]
                                               ),
                                               _vm._v(
-                                                "\n                                                Upload thumbnail\n                                            "
+                                                "\n                                            Upload thumbnail\n                                        "
                                               ),
                                             ],
                                             1
@@ -2870,69 +2843,6 @@ var render = function () {
                                                     "Thumbnail is required"
                                                   ),
                                                 ]
-                                              )
-                                            : _vm._e(),
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-col",
-                                        { attrs: { cols: "12", md: "6" } },
-                                        [
-                                          _c("banner-upload", {
-                                            attrs: {
-                                              field: "img",
-                                              langType: "en",
-                                              width: 1000,
-                                              height: 500,
-                                              "img-format": "png",
-                                            },
-                                            on: {
-                                              "crop-success":
-                                                _vm.bannerCropSuccess,
-                                            },
-                                            model: {
-                                              value: _vm.banner_image_upload,
-                                              callback: function ($$v) {
-                                                _vm.banner_image_upload = $$v
-                                              },
-                                              expression: "banner_image_upload",
-                                            },
-                                          }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              staticClass: "mt-3",
-                                              attrs: {
-                                                block: "",
-                                                color: "purple",
-                                                dark: "",
-                                              },
-                                              on: {
-                                                click:
-                                                  _vm.toggleBannerImageUpload,
-                                              },
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                { attrs: { dark: "" } },
-                                                [_vm._v("mdi-cloud-upload")]
-                                              ),
-                                              _vm._v(
-                                                "\n                                                Upload banner\n                                            "
-                                              ),
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _vm.banner_error
-                                            ? _c(
-                                                "p",
-                                                { staticClass: "red--text" },
-                                                [_vm._v("Banner is required")]
                                               )
                                             : _vm._e(),
                                         ],
