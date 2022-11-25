@@ -5452,16 +5452,8 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Category'
         }, {
           id: "3-2",
-          path: 'about',
-          title: 'Subcategory'
-        }, {
-          id: "3-3",
-          path: 'about',
+          path: 'brand',
           title: 'Brand'
-        }, {
-          id: "3-4",
-          path: 'menu',
-          title: 'menu'
         }]
       }, {
         id: 4,
@@ -6125,6 +6117,17 @@ var CategoryCreate = function CategoryCreate() {
 var CategoryEdit = function CategoryEdit() {
   return __webpack_require__.e(/*! import() */ "resources_js_views_category_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/category/Edit.vue */ "./resources/js/views/category/Edit.vue"));
 };
+
+//brand components
+var BrandIndex = function BrandIndex() {
+  return __webpack_require__.e(/*! import() */ "resources_js_views_brand_Index_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/brand/Index.vue */ "./resources/js/views/brand/Index.vue"));
+};
+var BrandCreate = function BrandCreate() {
+  return __webpack_require__.e(/*! import() */ "resources_js_views_brand_Create_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/brand/Create.vue */ "./resources/js/views/brand/Create.vue"));
+};
+var BrandEdit = function BrandEdit() {
+  return __webpack_require__.e(/*! import() */ "resources_js_views_brand_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/brand/Edit.vue */ "./resources/js/views/brand/Edit.vue"));
+};
 vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
   mode: 'history',
@@ -6209,6 +6212,27 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
         title: 'Edit category'
       },
       component: CategoryEdit
+    }, {
+      path: 'brand',
+      name: 'brand',
+      meta: {
+        title: 'brand'
+      },
+      component: BrandIndex
+    }, {
+      path: 'create-brand',
+      name: 'create-brand',
+      meta: {
+        title: 'Create brand'
+      },
+      component: BrandCreate
+    }, {
+      path: 'edit-brand/:id',
+      name: 'edit-brand',
+      meta: {
+        title: 'Edit brand'
+      },
+      component: BrandEdit
     }]
   }]
 });
@@ -6345,8 +6369,7 @@ var user = window.localStorage.getItem('user');
               case 0:
                 commit = _ref3.commit;
                 _context2.next = 3;
-                return axios.get('api/auth/logout').then(function (_ref4) {
-                  var data = _ref4.data;
+                return axios.post('/api/auth/logout').then(function (data) {
                   if (data.status == 200) {
                     commit('SET_USER', {});
                     commit('REMOVE_TOKEN_FROM_LOCALSTORAGE');
@@ -93554,7 +93577,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Dashboard_vue":1,"resources_js_views_user_Profile_vue":1,"resources_js_views_user_Index_vue":1,"resources_js_views_user_Create_vue":1,"resources_js_views_user_Edit_vue":1,"resources_js_views_category_Index_vue":1,"resources_js_views_category_Create_vue":1,"resources_js_views_category_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Dashboard_vue":1,"resources_js_views_user_Profile_vue":1,"resources_js_views_user_Index_vue":1,"resources_js_views_user_Create_vue":1,"resources_js_views_user_Edit_vue":1,"resources_js_views_category_Index_vue":1,"resources_js_views_category_Create_vue":1,"resources_js_views_category_Edit_vue":1,"resources_js_views_brand_Index_vue":1,"resources_js_views_brand_Create_vue":1,"resources_js_views_brand_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

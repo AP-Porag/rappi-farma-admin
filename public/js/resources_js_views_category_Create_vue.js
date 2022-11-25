@@ -150,6 +150,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -170,11 +179,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       status: ['active', 'in-active'],
       thumbnail_image_upload: false,
       banner_image_upload: false,
-      options: ["nav-menu", "scroller", "footer"],
+      //options:["nav-menu","scroller","footer"],
       form_data: {
         name: '',
         status: '',
-        show_in: [],
+        //show_in:[],
         thumbnail_image: '',
         banner_image: ''
       },
@@ -193,6 +202,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }]
       }
     };
+  },
+  created: function created() {
+    //console.log(JSON.parse(window.localStorage.getItem('token')))
   },
   methods: {
     toggleThumbnailImageUpload: function toggleThumbnailImageUpload() {
@@ -274,7 +286,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 token = JSON.parse(window.localStorage.getItem('token'));
                 _context.next = 16;
-                return axios.post('/api/user', _this.form_data, {
+                return axios.post('/api/category', _this.form_data, {
                   headers: {
                     'Authorization': 'Bearer ' + token
                   }
@@ -2575,7 +2587,22 @@ var render = function () {
           _c("h3", { staticClass: "text-capitalize" }, [
             _vm._v(_vm._s(this.$route.meta.title)),
           ]),
-        ]
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              staticClass: "mb-2",
+              attrs: { color: "primary", dark: "", link: "" },
+              on: {
+                click: function ($event) {
+                  return _vm.$router.push({ name: "category" })
+                },
+              },
+            },
+            [_vm._v("\n                All Categories\n            ")]
+          ),
+        ],
+        1
       ),
       _vm._v(" "),
       _c("br"),
@@ -2665,9 +2692,9 @@ var render = function () {
                     },
                     [
                       _vm._v(
-                        "\n                    " +
+                        "\n                        " +
                           _vm._s(_vm.message) +
-                          "\n                "
+                          "\n                    "
                       ),
                     ]
                   ),
@@ -2686,9 +2713,9 @@ var render = function () {
                     },
                     [
                       _vm._v(
-                        "\n                    " +
+                        "\n                        " +
                           _vm._s(_vm.message) +
-                          "\n                "
+                          "\n                    "
                       ),
                     ]
                   ),
@@ -2783,34 +2810,6 @@ var render = function () {
                                       _vm._v(" "),
                                       _c(
                                         "v-col",
-                                        { attrs: { cols: "12", md: "12" } },
-                                        [
-                                          _c("v-select", {
-                                            attrs: {
-                                              items: _vm.options,
-                                              chips: "",
-                                              label: "Where to show",
-                                              multiple: "",
-                                              outlined: "",
-                                            },
-                                            model: {
-                                              value: _vm.form_data.show_in,
-                                              callback: function ($$v) {
-                                                _vm.$set(
-                                                  _vm.form_data,
-                                                  "show_in",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "form_data.show_in",
-                                            },
-                                          }),
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-col",
                                         { attrs: { cols: "12", md: "6" } },
                                         [
                                           _c("thumbnail-upload", {
@@ -2856,7 +2855,7 @@ var render = function () {
                                                 [_vm._v("mdi-cloud-upload")]
                                               ),
                                               _vm._v(
-                                                "\n                                            Upload thumbnail\n                                        "
+                                                "\n                                                Upload thumbnail\n                                            "
                                               ),
                                             ],
                                             1
@@ -2923,7 +2922,7 @@ var render = function () {
                                                 [_vm._v("mdi-cloud-upload")]
                                               ),
                                               _vm._v(
-                                                "\n                                            Upload banner\n                                        "
+                                                "\n                                                Upload banner\n                                            "
                                               ),
                                             ],
                                             1

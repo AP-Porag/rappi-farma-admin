@@ -1,9 +1,9 @@
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_views_category_Edit_vue"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_views_brand_Create_vue"],{
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/category/Edit.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/category/Edit.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/brand/Create.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/brand/Create.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -204,7 +204,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   created: function created() {
-    this.getItemData();
+    //console.log(JSON.parse(window.localStorage.getItem('token')))
   },
   methods: {
     toggleThumbnailImageUpload: function toggleThumbnailImageUpload() {
@@ -227,7 +227,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
       //console.log(this.form_data.image)
     },
-    getItemData: function getItemData() {
+    submit: function submit() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var token;
@@ -235,6 +235,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                if (!(_this.form_data.thumbnail_image == '' && _this.form_data.banner_image == '')) {
+                  _context.next = 4;
+                  break;
+                }
+                _this.thumbnail_error = true;
+                _this.banner_error = true;
+                return _context.abrupt("return");
+              case 4:
+                if (!(_this.form_data.thumbnail_image == '')) {
+                  _context.next = 7;
+                  break;
+                }
+                _this.thumbnail_error = true;
+                return _context.abrupt("return");
+              case 7:
+                if (!(_this.form_data.banner_image == '')) {
+                  _context.next = 10;
+                  break;
+                }
+                _this.banner_error = true;
+                return _context.abrupt("return");
+              case 10:
+                if (!_this.valid) {
+                  _context.next = 18;
+                  break;
+                }
                 // Add a request interceptor
                 axios.interceptors.request.use(function (config) {
                   // Do something before request is sent
@@ -259,8 +285,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return Promise.reject(error);
                 });
                 token = JSON.parse(window.localStorage.getItem('token'));
-                _context.next = 5;
-                return axios.get("/api/category/".concat(_this.$route.params.id), {
+                _context.next = 16;
+                return axios.post('/api/category', _this.form_data, {
                   headers: {
                     'Authorization': 'Bearer ' + token
                   }
@@ -269,118 +295,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this.message = response.data.message;
                     _this.error = true;
                   } else {
-                    if (response.data.item != null) {
-                      console.log(response.data.item);
-                      _this.form_data.name = response.data.item.name;
-                      _this.form_data.status = response.data.item.status;
-                      _this.form_data.thumbnail_image = response.data.item.thumb;
-                      _this.form_data.banner_image = response.data.item.banner;
-                    }
+                    window.location.reload();
+                    _this.message = response.data.message;
+                    _this.success = true;
                   }
                 })["catch"](function (error) {
                   _this.message = 'Something went wrong !';
                   _this.error = true;
                 });
-              case 5:
+              case 16:
+                _context.next = 20;
+                break;
+              case 18:
+                _this.loading = true;
+                setTimeout(function () {
+                  _this.loading = false;
+                  _this.message = 'Validation error !';
+                  _this.error = true;
+                }, 3000);
+              case 20:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
-      }))();
-    },
-    submit: function submit() {
-      var _this2 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var token;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (!(_this2.form_data.thumbnail_image == '' && _this2.form_data.banner_image == '')) {
-                  _context2.next = 4;
-                  break;
-                }
-                _this2.thumbnail_error = true;
-                _this2.banner_error = true;
-                return _context2.abrupt("return");
-              case 4:
-                if (!(_this2.form_data.thumbnail_image == '')) {
-                  _context2.next = 7;
-                  break;
-                }
-                _this2.thumbnail_error = true;
-                return _context2.abrupt("return");
-              case 7:
-                if (!(_this2.form_data.banner_image == '')) {
-                  _context2.next = 10;
-                  break;
-                }
-                _this2.banner_error = true;
-                return _context2.abrupt("return");
-              case 10:
-                if (!_this2.valid) {
-                  _context2.next = 18;
-                  break;
-                }
-                // Add a request interceptor
-                axios.interceptors.request.use(function (config) {
-                  // Do something before request is sent
-                  _this2.loading = true;
-                  return config;
-                }, function (error) {
-                  // Do something with request error
-                  _this2.loading = false;
-                  _this2.message = error.data.status;
-                  _this2.error = true;
-                  return Promise.reject(error);
-                });
-
-                // Add a response interceptor
-                axios.interceptors.response.use(function (response) {
-                  _this2.loading = false;
-                  return response;
-                }, function (error) {
-                  _this2.loading = false;
-                  _this2.message = error.data.status;
-                  _this2.error = true;
-                  return Promise.reject(error);
-                });
-                token = JSON.parse(window.localStorage.getItem('token'));
-                _context2.next = 16;
-                return axios.put("/api/category/".concat(_this2.$route.params.id), _this2.form_data, {
-                  headers: {
-                    'Authorization': 'Bearer ' + token
-                  }
-                }).then(function (response) {
-                  if (response.data.status != 200) {
-                    _this2.message = response.data.message;
-                    _this2.error = true;
-                  } else {
-                    window.location.reload();
-                    _this2.message = response.data.message;
-                    _this2.success = true;
-                  }
-                })["catch"](function (error) {
-                  _this2.message = 'Something went wrong !';
-                  _this2.error = true;
-                });
-              case 16:
-                _context2.next = 20;
-                break;
-              case 18:
-                _this2.loading = true;
-                setTimeout(function () {
-                  _this2.loading = false;
-                  _this2.message = 'Validation error !';
-                  _this2.error = true;
-                }, 3000);
-              case 20:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
       }))();
     }
   }
@@ -2046,10 +1984,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/views/category/Edit.vue":
-/*!**********************************************!*\
-  !*** ./resources/js/views/category/Edit.vue ***!
-  \**********************************************/
+/***/ "./resources/js/views/brand/Create.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/views/brand/Create.vue ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2057,8 +1995,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Edit_vue_vue_type_template_id_b4bdc6a8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Edit.vue?vue&type=template&id=b4bdc6a8&scoped=true& */ "./resources/js/views/category/Edit.vue?vue&type=template&id=b4bdc6a8&scoped=true&");
-/* harmony import */ var _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Edit.vue?vue&type=script&lang=js& */ "./resources/js/views/category/Edit.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Create_vue_vue_type_template_id_6737c1ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create.vue?vue&type=template&id=6737c1ba&scoped=true& */ "./resources/js/views/brand/Create.vue?vue&type=template&id=6737c1ba&scoped=true&");
+/* harmony import */ var _Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Create.vue?vue&type=script&lang=js& */ "./resources/js/views/brand/Create.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -2068,27 +2006,27 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Edit_vue_vue_type_template_id_b4bdc6a8_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Edit_vue_vue_type_template_id_b4bdc6a8_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Create_vue_vue_type_template_id_6737c1ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Create_vue_vue_type_template_id_6737c1ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  "b4bdc6a8",
+  "6737c1ba",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/views/category/Edit.vue"
+component.options.__file = "resources/js/views/brand/Create.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/views/category/Edit.vue?vue&type=script&lang=js&":
-/*!***********************************************************************!*\
-  !*** ./resources/js/views/category/Edit.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************/
+/***/ "./resources/js/views/brand/Create.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/views/brand/Create.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2096,8 +2034,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Edit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/category/Edit.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Create.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/brand/Create.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -2147,19 +2085,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/views/category/Edit.vue?vue&type=template&id=b4bdc6a8&scoped=true&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/views/category/Edit.vue?vue&type=template&id=b4bdc6a8&scoped=true& ***!
-  \*****************************************************************************************/
+/***/ "./resources/js/views/brand/Create.vue?vue&type=template&id=6737c1ba&scoped=true&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/views/brand/Create.vue?vue&type=template&id=6737c1ba&scoped=true& ***!
+  \****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_b4bdc6a8_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_b4bdc6a8_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_6737c1ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_6737c1ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_b4bdc6a8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Edit.vue?vue&type=template&id=b4bdc6a8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/category/Edit.vue?vue&type=template&id=b4bdc6a8&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_6737c1ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Create.vue?vue&type=template&id=6737c1ba&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/brand/Create.vue?vue&type=template&id=6737c1ba&scoped=true&");
 
 
 /***/ }),
@@ -2622,10 +2560,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/category/Edit.vue?vue&type=template&id=b4bdc6a8&scoped=true&":
-/*!********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/category/Edit.vue?vue&type=template&id=b4bdc6a8&scoped=true& ***!
-  \********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/brand/Create.vue?vue&type=template&id=6737c1ba&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/brand/Create.vue?vue&type=template&id=6737c1ba&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2661,7 +2599,7 @@ var render = function () {
                 },
               },
             },
-            [_vm._v("\n            All Categories\n        ")]
+            [_vm._v("\n                All Categories\n            ")]
           ),
         ],
         1
@@ -2754,9 +2692,9 @@ var render = function () {
                     },
                     [
                       _vm._v(
-                        "\n                    " +
+                        "\n                        " +
                           _vm._s(_vm.message) +
-                          "\n                "
+                          "\n                    "
                       ),
                     ]
                   ),
@@ -2775,9 +2713,9 @@ var render = function () {
                     },
                     [
                       _vm._v(
-                        "\n                    " +
+                        "\n                        " +
                           _vm._s(_vm.message) +
-                          "\n                "
+                          "\n                    "
                       ),
                     ]
                   ),
@@ -2917,7 +2855,7 @@ var render = function () {
                                                 [_vm._v("mdi-cloud-upload")]
                                               ),
                                               _vm._v(
-                                                "\n                                            Upload thumbnail\n                                        "
+                                                "\n                                                Upload thumbnail\n                                            "
                                               ),
                                             ],
                                             1
@@ -2984,7 +2922,7 @@ var render = function () {
                                                 [_vm._v("mdi-cloud-upload")]
                                               ),
                                               _vm._v(
-                                                "\n                                            Upload banner\n                                        "
+                                                "\n                                                Upload banner\n                                            "
                                               ),
                                             ],
                                             1

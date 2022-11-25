@@ -46,6 +46,7 @@ class AuthController extends Controller
 
     public function logout()
     {
+        //dd('hello ddd');
         if (Auth::check()) {
             Auth::user()->AauthAcessToken()->delete();
         }

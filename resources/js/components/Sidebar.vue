@@ -98,18 +98,8 @@ export default {
                   },
                   {
                       id:"3-2",
-                      path:'about',
-                      title: 'Subcategory',
-                  },
-                  {
-                      id:"3-3",
-                      path:'about',
+                      path:'brand',
                       title: 'Brand',
-                  },
-                  {
-                      id:"3-4",
-                      path:'menu',
-                      title: 'menu',
                   },
               ],
           },

@@ -21,6 +21,11 @@ const CategoryIndex = () => import('../views/category/Index.vue')
 const CategoryCreate = () => import('../views/category/Create.vue')
 const CategoryEdit = () => import('../views/category/Edit.vue')
 
+//brand components
+const BrandIndex = () => import('../views/brand/Index.vue')
+const BrandCreate = () => import('../views/brand/Create.vue')
+const BrandEdit = () => import('../views/brand/Edit.vue')
+
 Vue.use(vueRouter);
 
 const router = new vueRouter({
@@ -103,6 +108,24 @@ const router = new vueRouter({
                     name:'edit-category',
                     meta:{title:'Edit category'},
                     component: CategoryEdit
+                },
+                {
+                    path:'brand',
+                    name:'brand',
+                    meta:{title:'brand'},
+                    component: BrandIndex
+                },
+                {
+                    path:'create-brand',
+                    name:'create-brand',
+                    meta:{title:'Create brand'},
+                    component: BrandCreate
+                },
+                {
+                    path:'edit-brand/:id',
+                    name:'edit-brand',
+                    meta:{title:'Edit brand'},
+                    component: BrandEdit
                 },
 
             ],

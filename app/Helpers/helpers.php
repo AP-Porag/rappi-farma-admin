@@ -194,6 +194,17 @@ if (!function_exists('get_default_image')) {
     }
 }
 
+if (!function_exists('delete_image')) {
+
+    function delete_image($path)
+    {
+        if (Storage::disk('public')->exists($path)){
+            Storage::disk('public')->delete($path);
+        }
+
+    }
+}
+
 
 if (!function_exists('generate_slug')) {
     function generate_slug($value)

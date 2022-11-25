@@ -49,8 +49,8 @@ export default {
         },
         async logout({commit}){
 
-            return await axios.get('api/auth/logout')
-                .then(({data})=>{
+            return await axios.post('/api/auth/logout')
+                .then((data)=>{
                     if (data.status == 200){
                         commit('SET_USER',{})
                         commit('REMOVE_TOKEN_FROM_LOCALSTORAGE')

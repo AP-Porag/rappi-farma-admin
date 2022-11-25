@@ -19,7 +19,7 @@
                                     </v-avatar>
                                 </div>
                                 <div v-else>
-                                    <strong>No category found</strong>
+                                    <strong>No brand found</strong>
                                 </div>
                             </v-card-text>
                         </v-card>
@@ -55,7 +55,7 @@
                         <template v-slot:top>
                             <v-toolbar flat>
 <!--                                <v-toolbar-title class="text-capitalize">{{$route.meta.title}}'s List</v-toolbar-title>-->
-                                <v-toolbar-title class="text-capitalize">Categories List</v-toolbar-title>
+                                <v-toolbar-title class="text-capitalize">Brands List</v-toolbar-title>
                                 <v-divider
                                     class="mx-4"
                                     inset
@@ -75,7 +75,7 @@
                                     color="primary"
                                     dark
                                     class="mb-2"
-                                    @click="$router.push({ name: 'create-category' })"
+                                    @click="$router.push({ name: 'create-brand' })"
                                     link
                                 >
                                     Add {{$route.meta.title}}
@@ -101,7 +101,7 @@
                             </v-chip>
                         </template>
                         <template v-slot:item.action="{ item }">
-                            <v-btn icon color="blue" @click="$router.push({ name: 'edit-category',params:{id:item.id} })">
+                            <v-btn icon color="blue" @click="$router.push({ name: 'edit-brand',params:{id:item.id} })">
                                 <v-icon small>mdi-pencil</v-icon>
                             </v-btn>
                             <v-btn
@@ -163,8 +163,8 @@ export default {
             error:false,
             message:'',
             activityLog: [
-                {title: 'Total Categories', amount: this.total, icon: 'mdi-account', color: 'cyan lighten-3'},
-                {title: 'Total Brand', amount: 3433, icon: 'mdi-account-group-outline', color: 'purple darken-2'},
+                {title: 'Total Categories', amount: 124, icon: 'mdi-account', color: 'cyan lighten-3'},
+                {title: 'Total Brand', amount: this.total, icon: 'mdi-account-group-outline', color: 'purple darken-2'},
             ],
             headers: [
                 {
@@ -173,6 +173,7 @@ export default {
                     sortable: true,
                     value: 'name',
                 },
+                {text: 'Category', value: 'category.category_name',sortable: false},
                 {text: 'Thumbnail', value: 'thumb',sortable: false},
                 {text: 'Status', value: 'status',sortable: false},
                 {text: 'Actions', value: 'action',sortable: false},
@@ -182,13 +183,10 @@ export default {
         }
     },
     methods: {
-        onButtonClick(item) {
-            console.log('click on ' + item.no)
-        },
         async datatableSearch($e){
             if ($e.length >= 3){
                 let token = JSON.parse(window.localStorage.getItem('token'))
-                await axios.get(`/api/category/search-category/${$e}?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
+                await axios.get(`/api/brand/search-brand/${$e}?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
                     .then((response)=>{
                         if (response.data.status != 200){
                             console.log(response.data.status)
@@ -204,7 +202,7 @@ export default {
             }
             if ($e.length <= 0){
                 let token = JSON.parse(window.localStorage.getItem('token'))
-                await axios.get(`/api/category?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
+                await axios.get(`/api/brand?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
                     .then((response)=>{
                         if (response.data.status != 200){
                             console.log(response.data.status)
@@ -223,7 +221,7 @@ export default {
             this.page = $e.page;
             this.per_page = $e.itemsPerPage;
             let token = JSON.parse(window.localStorage.getItem('token'))
-            await axios.get(`/api/category?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
+            await axios.get(`/api/brand?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
                 .then((response)=>{
                     if (response.data.status != 200){
                         console.log(response.data.status)
@@ -274,7 +272,7 @@ export default {
         },
         async deleteItem(){
             let token = JSON.parse(window.localStorage.getItem('token'))
-            await axios.delete(`/api/category/${this.itemToDelete}`, {headers: { 'Authorization': 'Bearer ' + token }})
+            await axios.delete(`/api/brand/${this.itemToDelete}`, {headers: { 'Authorization': 'Bearer ' + token }})
                 .then((response)=>{
                     if (response.data.status != 200){
                         this.message = response.data.message;
