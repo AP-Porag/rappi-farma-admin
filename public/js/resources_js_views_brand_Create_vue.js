@@ -154,7 +154,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       valid: false,
       success: false,
       error: false,
-      banner_error: false,
       thumbnail_error: false,
       loading: false,
       message: '',
@@ -162,7 +161,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       categories: [],
       thumbnail_image_upload: false,
       banner_image_upload: false,
-      //options:["nav-menu","scroller","footer"],
       form_data: {
         category_id: '',
         name: '',
@@ -187,6 +185,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     //console.log(JSON.parse(window.localStorage.getItem('token')))
+    this.loadCategories();
   },
   methods: {
     toggleThumbnailImageUpload: function toggleThumbnailImageUpload() {
@@ -276,6 +275,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    loadCategories: function loadCategories() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var token;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                token = JSON.parse(window.localStorage.getItem('token'));
+                _context2.next = 3;
+                return axios.get('/api/brand/all/categories', {
+                  headers: {
+                    'Authorization': 'Bearer ' + token
+                  }
+                }).then(function (response) {
+                  if (response.data.status != 200) {
+                    _this2.message = response.data.message;
+                    _this2.error = true;
+                  } else {
+                    console.log(response);
+                    _this2.categories = response.data.data.items;
+                  }
+                })["catch"](function (error) {
+                  _this2.message = 'Something went wrong !';
+                  _this2.error = true;
+                });
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }

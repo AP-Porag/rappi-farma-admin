@@ -135,7 +135,6 @@ export default {
         valid: false,
         success:false,
         error:false,
-        banner_error:false,
         thumbnail_error:false,
         loading:false,
         message:'',
@@ -143,7 +142,6 @@ export default {
         categories: [],
         thumbnail_image_upload: false,
         banner_image_upload: false,
-        //options:["nav-menu","scroller","footer"],
         form_data:{
             category_id:'',
             name:'',
@@ -167,6 +165,7 @@ export default {
     }),
     created() {
         //console.log(JSON.parse(window.localStorage.getItem('token')))
+        this.loadCategories();
     },
     methods:{
         toggleThumbnailImageUpload() {
@@ -235,6 +234,24 @@ export default {
                     this.error = true
                 },3000)
             }
+        },
+
+        async loadCategories(){
+            let token = JSON.parse(window.localStorage.getItem('token'))
+            await axios.get('/api/brand/all/categories', {headers: { 'Authorization': 'Bearer ' + token }})
+                .then((response)=>{
+                    if (response.data.status != 200){
+                        this.message = response.data.message;
+                        this.error = true;
+                    }else {
+                        console.log(response)
+                        this.categories = response.data.data.items
+                    }
+                })
+                .catch((error)=>{
+                    this.message = 'Something went wrong !';
+                    this.error = true;
+                })
         }
     },
 

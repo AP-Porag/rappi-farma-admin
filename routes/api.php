@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function (){
     //brand
     Route::resource('brand',BrandController::class)->except('create','edit');
     Route::get('/brand/search-brand/{text}',[BrandController::class,'datatableSearch']);
+    Route::get('/brand/all/categories',[BrandController::class,'AllCategories']);
 
 });
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

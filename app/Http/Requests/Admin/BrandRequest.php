@@ -28,7 +28,6 @@ class BrandRequest extends FormRequest
             'name'=>'required',
             'status'=>'required',
             'thumbnail_image'=>'required',
-            'banner_image'=>'required',
         ];
     }
 }

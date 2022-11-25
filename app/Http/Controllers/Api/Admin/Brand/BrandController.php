@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api\Admin\Brand;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BrandRequest;
 use App\Http\Resources\BrandResource;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\VSelectResource;
 use App\Models\Brand;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -153,6 +156,18 @@ class BrandController extends Controller
             ->paginate($request->per_page);
         $items = BrandResource::collection($items);
         $total = Brand::count();
+        $data = [
+            "items"=>$items,
+            "total"=>$total
+        ];
+
+        return response()->json(['status'=>200,'data'=>$data]);
+    }
+
+    public function AllCategories()
+    {
+        $items = VSelectResource::collection(Category::all());
+        $total = $items->count();
         $data = [
             "items"=>$items,
             "total"=>$total
