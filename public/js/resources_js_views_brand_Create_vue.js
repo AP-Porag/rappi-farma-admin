@@ -2575,7 +2575,7 @@ var render = function () {
               attrs: { color: "primary", dark: "", link: "" },
               on: {
                 click: function ($event) {
-                  return _vm.$router.push({ name: "category" })
+                  return _vm.$router.push({ name: "brand" })
                 },
               },
             },

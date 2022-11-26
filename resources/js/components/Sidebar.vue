@@ -103,28 +103,28 @@ export default {
                   },
               ],
           },
-          {id:4,icon:'mdi-gift-open',title:'Products',path:''},
+          {id:4,icon:'mdi-gift-open',title:'Products',path:'product'},
           {id:5,icon:'mdi-clipboard-list-outline',title:'Orders',path:''},
           {id:6,icon:'mdi-truck-delivery',title:'Delivery',path:''},
-          {id:7,icon:'mdi-store-search',title:'Inventory',path:''},
-          {id:8,icon:'mdi-card-account-details-outline',title:'Advertisement',path:''},
-          {
-              id:9,
-              icon:'mdi-cog',
-              title:'Content Management',
-              subLinks: [
-                  {
-                      id:"9-1",
-                      path:'about',
-                      title: 'Home page settings',
-                  },
-                  {
-                      id:"9-2",
-                      path: '',
-                      title: 'Category settings',
-                  },
-              ],
-          },
+          // {id:7,icon:'mdi-store-search',title:'Inventory',path:''},
+          // {id:8,icon:'mdi-card-account-details-outline',title:'Advertisement',path:''},
+          // {
+          //     id:9,
+          //     icon:'mdi-cog',
+          //     title:'Content Management',
+          //     subLinks: [
+          //         {
+          //             id:"9-1",
+          //             path:'about',
+          //             title: 'Home page settings',
+          //         },
+          //         {
+          //             id:"9-2",
+          //             path: '',
+          //             title: 'Category settings',
+          //         },
+          //     ],
+          // },
       ],
     };
   },

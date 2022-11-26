@@ -36,8 +36,8 @@ export default {
 }
 </script>
 <style>
-.v-main__wrap{
-    background: #F5F5F5 !important;
+.ap_main_component{
+    background: #f3f9fd !important;
     padding-bottom:60px;
 }
 </style>

@@ -26,6 +26,11 @@ const BrandIndex = () => import('../views/brand/Index.vue')
 const BrandCreate = () => import('../views/brand/Create.vue')
 const BrandEdit = () => import('../views/brand/Edit.vue')
 
+//product components
+const ProductIndex = () => import('../views/product/Index.vue')
+const ProductCreate = () => import('../views/product/Create.vue')
+const ProductEdit = () => import('../views/product/Edit.vue')
+
 Vue.use(vueRouter);
 
 const router = new vueRouter({
@@ -126,6 +131,24 @@ const router = new vueRouter({
                     name:'edit-brand',
                     meta:{title:'Edit brand'},
                     component: BrandEdit
+                },
+                {
+                    path:'product',
+                    name:'product',
+                    meta:{title:'product'},
+                    component: ProductIndex
+                },
+                {
+                    path:'create-product',
+                    name:'create-product',
+                    meta:{title:'Create product'},
+                    component: ProductCreate
+                },
+                {
+                    path:'edit-product/:id',
+                    name:'edit-product',
+                    meta:{title:'Edit product'},
+                    component: ProductEdit
                 },
 
             ],

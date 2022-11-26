@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin\Brand;
+namespace App\Http\Controllers\Api\Admin\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BrandRequest;
-use App\Http\Resources\BrandResource;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\VSelectResource;
-use App\Models\Brand;
-use App\Models\Category;
+use App\Http\Requests\Admin\ProductRequest;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class BrandController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,8 +19,8 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-        $items = BrandResource::collection(Brand::orderBy('id','DESC')->paginate($request->per_page));
-        $total = Brand::count();
+        $items = ProductResource::collection(Product::orderBy('id','DESC')->paginate($request->per_page));
+        $total = Product::count();
         $data = [
             "items"=>$items,
             "total"=>$total
@@ -39,10 +36,11 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BrandRequest $request)
+    public function store(ProductRequest $request)
     {
-        $item = Brand::create([
+        $item = Product::create([
             'category_id'=>$request->category_id,
+            'brand_id'=>$request->brand_id,
             'name'=>$request->name,
             'slug'=>Str::slug($request->name),
             'status'=>$request->status,
@@ -60,7 +58,7 @@ class BrandController extends Controller
                 $image = str_replace($replace, '', $image_64);
                 $image = str_replace(' ', '+', $image);
                 $imageName = time().'.'.$extension;
-                Storage::disk('public')->put(Brand::FILE_STORE_THUMB_PATH.'/' . $imageName, base64_decode($image));
+                Storage::disk('public')->put(Product::FILE_STORE_THUMB_PATH.'/' . $imageName, base64_decode($image));
                 $image_link = $imageName;
 
 
@@ -76,8 +74,8 @@ class BrandController extends Controller
 
     public function show($id)
     {
-        $item = Brand::find($id);
-        $item = new BrandResource($item);
+        $item = Product::find($id);
+        $item = new ProductResource($item);
         return response()->json(['status'=>200,'item'=>$item]);
     }
 
@@ -90,8 +88,9 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = Brand::find($id);
+        $item = Product::find($id);
         $item->category_id = $request->category_id;
+        $item->brand_id = $request->brand_id;
         $item->name = $request->name;
         $item->slug = Str::slug($request->name);
         $item->status = $request->status;
@@ -101,7 +100,7 @@ class BrandController extends Controller
             //image upload
             if (str_contains($request->thumbnail_image, 'data:image/')){
 
-                $path = Brand::FILE_STORE_THUMB_PATH.'/' . $item->thumbnail;
+                $path = Product::FILE_STORE_THUMB_PATH.'/' . $item->thumbnail;
                 delete_image($path);
 
                 $image_64 = $request->thumbnail_image; //your base64 encoded data
@@ -111,7 +110,7 @@ class BrandController extends Controller
                 $image = str_replace($replace, '', $image_64);
                 $image = str_replace(' ', '+', $image);
                 $imageName = time().'.'.$extension;
-                Storage::disk('public')->put(Brand::FILE_STORE_THUMB_PATH.'/' . $imageName, base64_decode($image));
+                Storage::disk('public')->put(Product::FILE_STORE_THUMB_PATH.'/' . $imageName, base64_decode($image));
                 $image_link = $imageName;
 
 
@@ -135,9 +134,9 @@ class BrandController extends Controller
     {
         try {
             if ($id){
-                $item = Brand::find($id);
+                $item = Product::find($id);
 
-                $path = Brand::FILE_STORE_THUMB_PATH.'/' . $item->thumbnail;
+                $path = Product::FILE_STORE_THUMB_PATH.'/' . $item->thumbnail;
                 delete_image($path);
 
                 $item->delete();
@@ -153,22 +152,10 @@ class BrandController extends Controller
 
     public function datatableSearch(Request $request,$text)
     {
-        $items = Brand::where("name","LIKE","%$text%")
+        $items = Product::where("name","LIKE","%$text%")
             ->paginate($request->per_page);
-        $items = BrandResource::collection($items);
-        $total = Brand::count();
-        $data = [
-            "items"=>$items,
-            "total"=>$total
-        ];
-
-        return response()->json(['status'=>200,'data'=>$data]);
-    }
-
-    public function AllCategories()
-    {
-        $items = VSelectResource::collection(Category::all());
-        $total = $items->count();
+        $items = ProductResource::collection($items);
+        $total = Product::count();
         $data = [
             "items"=>$items,
             "total"=>$total
