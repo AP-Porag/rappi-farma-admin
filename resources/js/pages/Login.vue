@@ -154,7 +154,7 @@ export default {
 <style scoped>
 .backgruond{
     background-image: url(../assets/Order-Banner.jpg) !important;
-    height: 300px;
+    height: 50vh;
     width: 100%;
     display: block;
     position: absolute;

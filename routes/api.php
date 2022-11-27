@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/brand/search-brand/{text}',[BrandController::class,'datatableSearch']);
     Route::get('/brand/all/categories',[BrandController::class,'AllCategories']);
 
-    //brand
+    //product
     Route::resource('product',ProductController::class)->except('create','edit');
     Route::get('/product/search-product/{text}',[ProductController::class,'datatableSearch']);
 

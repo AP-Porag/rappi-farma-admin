@@ -56,7 +56,7 @@
                         <template v-slot:top>
                             <v-toolbar flat>
 <!--                                <v-toolbar-title class="text-capitalize">{{$route.meta.title}}'s List</v-toolbar-title>-->
-                                <v-toolbar-title class="text-capitalize">Brands List</v-toolbar-title>
+                                <v-toolbar-title class="text-capitalize">Products List</v-toolbar-title>
                                 <v-divider
                                     class="mx-4"
                                     inset
@@ -73,9 +73,18 @@
                                 ></v-text-field>
                                 <v-spacer></v-spacer>
                                 <v-btn
-                                    color="primary"
+                                    color="blue-grey darken-4"
                                     dark
                                     class="mb-2"
+                                    @click="$router.push({ name: 'create-brand' })"
+                                    link
+                                >
+                                    Add Stock
+                                </v-btn>
+                                <v-btn
+                                    color="primary"
+                                    dark
+                                    class="mb-2 ml-3"
                                     @click="$router.push({ name: 'create-brand' })"
                                     link
                                 >
@@ -102,8 +111,11 @@
                             </v-chip>
                         </template>
                         <template v-slot:item.action="{ item }">
-                            <v-btn icon color="blue" @click="$router.push({ name: 'edit-brand',params:{id:item.id} })">
+                            <v-btn icon color="blue" @click="$router.push({ name: 'edit-product',params:{id:item.id} })">
                                 <v-icon small>mdi-pencil</v-icon>
+                            </v-btn>
+                            <v-btn icon color="yellow darken-4" @click="$router.push({ name: 'edit-product',params:{id:item.id} })">
+                                <v-icon small>mdi-eye</v-icon>
                             </v-btn>
                             <v-btn
                                 color="red lighten-2"
@@ -174,6 +186,9 @@ export default {
                 },
                 {text: 'Category', value: 'category.category_name',sortable: false},
                 {text: 'Thumbnail', value: 'thumb',sortable: false},
+                {text: 'Current Stock', value: 'current_stock',sortable: false},
+                {text: 'Price', value: 'price',sortable: false},
+                {text: 'SKU', value: 'SKU',sortable: false},
                 {text: 'Status', value: 'status',sortable: false},
                 {text: 'Actions', value: 'action',sortable: false},
             ],
@@ -194,7 +209,7 @@ export default {
         async datatableSearch($e){
             if ($e.length >= 3){
                 let token = JSON.parse(window.localStorage.getItem('token'))
-                await axios.get(`/api/brand/search-brand/${$e}?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
+                await axios.get(`/api/product/search-product/${$e}?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
                     .then((response)=>{
                         if (response.data.status != 200){
                             console.log(response.data.status)
@@ -210,7 +225,7 @@ export default {
             }
             if ($e.length <= 0){
                 let token = JSON.parse(window.localStorage.getItem('token'))
-                await axios.get(`/api/brand?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
+                await axios.get(`/api/product?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
                     .then((response)=>{
                         if (response.data.status != 200){
                             console.log(response.data.status)
@@ -229,7 +244,7 @@ export default {
             this.page = $e.page;
             this.per_page = $e.itemsPerPage;
             let token = JSON.parse(window.localStorage.getItem('token'))
-            await axios.get(`/api/brand?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
+            await axios.get(`/api/product?page=${this.page}`, {params:{'per_page':this.per_page},headers: { 'Authorization': 'Bearer ' + token }})
                 .then((response)=>{
                     if (response.data.status != 200){
                         console.log(response.data.status)
@@ -280,7 +295,7 @@ export default {
         },
         async deleteItem(){
             let token = JSON.parse(window.localStorage.getItem('token'))
-            await axios.delete(`/api/brand/${this.itemToDelete}`, {headers: { 'Authorization': 'Bearer ' + token }})
+            await axios.delete(`/api/product/${this.itemToDelete}`, {headers: { 'Authorization': 'Bearer ' + token }})
                 .then((response)=>{
                     if (response.data.status != 200){
                         this.message = response.data.message;

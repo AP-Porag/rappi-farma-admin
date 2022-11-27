@@ -11760,7 +11760,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()((_assets_Order_Banner_jpg__WEBPACK_IMPORTED_MODULE_2___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.backgruond[data-v-3b6adb30]{\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") !important;\n    height: 300px;\n    width: 100%;\n    display: block;\n    position: absolute;\n    top: 0;\n    background-size: cover;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.backgruond[data-v-3b6adb30]{\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") !important;\n    height: 50vh;\n    width: 100%;\n    display: block;\n    position: absolute;\n    top: 0;\n    background-size: cover;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

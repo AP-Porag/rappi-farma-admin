@@ -269,6 +269,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -299,6 +311,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         text: 'Thumbnail',
         value: 'thumb',
+        sortable: false
+      }, {
+        text: 'Current Stock',
+        value: 'current_stock',
+        sortable: false
+      }, {
+        text: 'Price',
+        value: 'price',
+        sortable: false
+      }, {
+        text: 'SKU',
+        value: 'SKU',
         sortable: false
       }, {
         text: 'Status',
@@ -344,7 +368,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
                 token = JSON.parse(window.localStorage.getItem('token'));
                 _context.next = 4;
-                return axios.get("/api/brand/search-brand/".concat($e, "?page=").concat(_this.page), {
+                return axios.get("/api/product/search-product/".concat($e, "?page=").concat(_this.page), {
                   params: {
                     'per_page': _this.per_page
                   },
@@ -369,7 +393,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
                 _token = JSON.parse(window.localStorage.getItem('token'));
                 _context.next = 8;
-                return axios.get("/api/brand?page=".concat(_this.page), {
+                return axios.get("/api/product?page=".concat(_this.page), {
                   params: {
                     'per_page': _this.per_page
                   },
@@ -407,7 +431,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.per_page = $e.itemsPerPage;
                 token = JSON.parse(window.localStorage.getItem('token'));
                 _context2.next = 5;
-                return axios.get("/api/brand?page=".concat(_this2.page), {
+                return axios.get("/api/product?page=".concat(_this2.page), {
                   params: {
                     'per_page': _this2.per_page
                   },
@@ -488,7 +512,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 token = JSON.parse(window.localStorage.getItem('token'));
                 _context4.next = 3;
-                return axios["delete"]("/api/brand/".concat(_this4.itemToDelete), {
+                return axios["delete"]("/api/product/".concat(_this4.itemToDelete), {
                   headers: {
                     'Authorization': 'Bearer ' + token
                   }
@@ -1042,7 +1066,7 @@ var render = function () {
                                 _c(
                                   "v-toolbar-title",
                                   { staticClass: "text-capitalize" },
-                                  [_vm._v("Brands List")]
+                                  [_vm._v("Products List")]
                                 ),
                                 _vm._v(" "),
                                 _c("v-divider", {
@@ -1069,6 +1093,30 @@ var render = function () {
                                   "v-btn",
                                   {
                                     staticClass: "mb-2",
+                                    attrs: {
+                                      color: "blue-grey darken-4",
+                                      dark: "",
+                                      link: "",
+                                    },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.$router.push({
+                                          name: "create-brand",
+                                        })
+                                      },
+                                    },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Add Stock\n                                "
+                                    ),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    staticClass: "mb-2 ml-3",
                                     attrs: {
                                       color: "primary",
                                       dark: "",
@@ -1150,7 +1198,7 @@ var render = function () {
                                 on: {
                                   click: function ($event) {
                                     return _vm.$router.push({
-                                      name: "edit-brand",
+                                      name: "edit-product",
                                       params: { id: item.id },
                                     })
                                   },
@@ -1159,6 +1207,27 @@ var render = function () {
                               [
                                 _c("v-icon", { attrs: { small: "" } }, [
                                   _vm._v("mdi-pencil"),
+                                ]),
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { icon: "", color: "yellow darken-4" },
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.$router.push({
+                                      name: "edit-product",
+                                      params: { id: item.id },
+                                    })
+                                  },
+                                },
+                              },
+                              [
+                                _c("v-icon", { attrs: { small: "" } }, [
+                                  _vm._v("mdi-eye"),
                                 ]),
                               ],
                               1

@@ -13,7 +13,7 @@ class Product extends Model
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes,ModelBootHandler;
 
-    public const FILE_STORE_THUMB_PATH = 'products/thumb';
+    public const FILE_STORE_THUMB_PATH = 'products';
 
     /**
      * The attributes that are mass assignable.
