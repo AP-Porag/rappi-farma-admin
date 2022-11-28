@@ -1101,7 +1101,7 @@ var render = function () {
                                     on: {
                                       click: function ($event) {
                                         return _vm.$router.push({
-                                          name: "create-brand",
+                                          name: "create-product",
                                         })
                                       },
                                     },
@@ -1125,7 +1125,7 @@ var render = function () {
                                     on: {
                                       click: function ($event) {
                                         return _vm.$router.push({
-                                          name: "create-brand",
+                                          name: "create-product",
                                         })
                                       },
                                     },

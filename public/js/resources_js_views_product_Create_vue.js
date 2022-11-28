@@ -142,6 +142,87 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -159,11 +240,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       message: '',
       status: ['active', 'in-active'],
       categories: [],
+      brands: [],
       thumbnail_image_upload: false,
       banner_image_upload: false,
       form_data: {
         category_id: '',
+        brand_id: '',
         name: '',
+        short_description: '',
+        description: '',
+        price: '',
+        current_stock: '',
+        unit: '',
         status: '',
         thumbnail_image: ''
       },
@@ -177,8 +265,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         thumbnail_image: [function (v) {
           return !!v || 'Thumbnail is required';
         }],
-        category_id: [function (v) {
-          return !!v || 'Category is required';
+        price: [function (v) {
+          return !!v || 'Price is required';
         }]
       }
     };
@@ -242,7 +330,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 token = JSON.parse(window.localStorage.getItem('token'));
                 _context.next = 9;
-                return axios.post('/api/brand', _this.form_data, {
+                return axios.post('/api/product', _this.form_data, {
                   headers: {
                     'Authorization': 'Bearer ' + token
                   }
@@ -296,7 +384,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this2.message = response.data.message;
                     _this2.error = true;
                   } else {
-                    console.log(response);
+                    //console.log(response)
                     _this2.categories = response.data.data.items;
                   }
                 })["catch"](function (error) {
@@ -309,6 +397,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
+      }))();
+    },
+    loadCategoryBrand: function loadCategoryBrand() {
+      var _this3 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var category_id, token;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                console.log(_this3.form_data.category_id);
+                category_id = _this3.form_data.category_id;
+                token = JSON.parse(window.localStorage.getItem('token'));
+                _context3.next = 5;
+                return axios.get("/api/product/all/category-brand/".concat(category_id), {
+                  headers: {
+                    'Authorization': 'Bearer ' + token
+                  }
+                }).then(function (response) {
+                  if (response.data.status != 200) {
+                    _this3.message = response.data.message;
+                    _this3.error = true;
+                  } else {
+                    //console.log(response)
+                    _this3.brands = response.data.data.items;
+                  }
+                })["catch"](function (error) {
+                  _this3.message = 'Something went wrong !';
+                  _this3.error = true;
+                });
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }
@@ -2575,11 +2699,11 @@ var render = function () {
               attrs: { color: "primary", dark: "", link: "" },
               on: {
                 click: function ($event) {
-                  return _vm.$router.push({ name: "brand" })
+                  return _vm.$router.push({ name: "product" })
                 },
               },
             },
-            [_vm._v("\n            All Brands\n        ")]
+            [_vm._v("\n            All Products\n        ")]
           ),
         ],
         1
@@ -2722,6 +2846,254 @@ var render = function () {
                                                 [
                                                   _c("v-select", {
                                                     attrs: {
+                                                      items: _vm.categories,
+                                                      label: "Category",
+                                                      outlined: "",
+                                                      clearable: "",
+                                                    },
+                                                    on: {
+                                                      change:
+                                                        _vm.loadCategoryBrand,
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form_data
+                                                          .category_id,
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.form_data,
+                                                          "category_id",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form_data.category_id",
+                                                    },
+                                                  }),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "6",
+                                                  },
+                                                },
+                                                [
+                                                  _c("v-select", {
+                                                    attrs: {
+                                                      items: _vm.brands,
+                                                      label: "Brand",
+                                                      outlined: "",
+                                                      clearable: "",
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form_data.brand_id,
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.form_data,
+                                                          "brand_id",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form_data.brand_id",
+                                                    },
+                                                  }),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "12",
+                                                  },
+                                                },
+                                                [
+                                                  _c("v-textarea", {
+                                                    attrs: {
+                                                      label:
+                                                        "Short Description",
+                                                      required: "",
+                                                      outlined: "",
+                                                      clearable: "",
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form_data
+                                                          .short_description,
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.form_data,
+                                                          "short_description",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form_data.short_description",
+                                                    },
+                                                  }),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "12",
+                                                  },
+                                                },
+                                                [
+                                                  _c("v-textarea", {
+                                                    attrs: {
+                                                      label: "Description",
+                                                      required: "",
+                                                      outlined: "",
+                                                      clearable: "",
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form_data
+                                                          .description,
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.form_data,
+                                                          "description",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form_data.description",
+                                                    },
+                                                  }),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "6",
+                                                  },
+                                                },
+                                                [
+                                                  _c("v-text-field", {
+                                                    attrs: {
+                                                      rules: _vm.rules.price,
+                                                      label: "Price",
+                                                      type: "number",
+                                                      required: "",
+                                                      outlined: "",
+                                                      clearable: "",
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.form_data.price,
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.form_data,
+                                                          "price",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form_data.price",
+                                                    },
+                                                  }),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "6",
+                                                  },
+                                                },
+                                                [
+                                                  _c("v-text-field", {
+                                                    attrs: {
+                                                      rules: _vm.rules.name,
+                                                      label: "Stock",
+                                                      type: "number",
+                                                      required: "",
+                                                      outlined: "",
+                                                      clearable: "",
+                                                    },
+                                                    model: {
+                                                      value: _vm.form_data.name,
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.form_data,
+                                                          "name",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form_data.name",
+                                                    },
+                                                  }),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "6",
+                                                  },
+                                                },
+                                                [
+                                                  _c("v-text-field", {
+                                                    attrs: {
+                                                      label: "Unit",
+                                                      required: "",
+                                                      outlined: "",
+                                                      clearable: "",
+                                                    },
+                                                    model: {
+                                                      value: _vm.form_data.unit,
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.form_data,
+                                                          "unit",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "form_data.unit",
+                                                    },
+                                                  }),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-col",
+                                                {
+                                                  attrs: {
+                                                    cols: "12",
+                                                    md: "6",
+                                                  },
+                                                },
+                                                [
+                                                  _c("v-select", {
+                                                    attrs: {
                                                       items: _vm.status,
                                                       rules: _vm.rules.status,
                                                       label: "Status",
@@ -2740,43 +3112,6 @@ var render = function () {
                                                       },
                                                       expression:
                                                         "form_data.status",
-                                                    },
-                                                  }),
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-col",
-                                                {
-                                                  attrs: {
-                                                    cols: "12",
-                                                    md: "6",
-                                                  },
-                                                },
-                                                [
-                                                  _c("v-select", {
-                                                    attrs: {
-                                                      items: _vm.categories,
-                                                      rules:
-                                                        _vm.rules.category_id,
-                                                      label: "Category",
-                                                      outlined: "",
-                                                      clearable: "",
-                                                    },
-                                                    model: {
-                                                      value:
-                                                        _vm.form_data
-                                                          .category_id,
-                                                      callback: function ($$v) {
-                                                        _vm.$set(
-                                                          _vm.form_data,
-                                                          "category_id",
-                                                          $$v
-                                                        )
-                                                      },
-                                                      expression:
-                                                        "form_data.category_id",
                                                     },
                                                   }),
                                                 ],

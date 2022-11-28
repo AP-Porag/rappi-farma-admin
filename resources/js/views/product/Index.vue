@@ -76,7 +76,7 @@
                                     color="blue-grey darken-4"
                                     dark
                                     class="mb-2"
-                                    @click="$router.push({ name: 'create-brand' })"
+                                    @click="$router.push({ name: 'create-product' })"
                                     link
                                 >
                                     Add Stock
@@ -85,7 +85,7 @@
                                     color="primary"
                                     dark
                                     class="mb-2 ml-3"
-                                    @click="$router.push({ name: 'create-brand' })"
+                                    @click="$router.push({ name: 'create-product' })"
                                     link
                                 >
                                     Add {{$route.meta.title}}

@@ -6,10 +6,10 @@
                 color="primary"
                 dark
                 class="mb-2"
-                @click="$router.push({ name: 'brand' })"
+                @click="$router.push({ name: 'product' })"
                 link
             >
-                All Brands
+                All Products
             </v-btn>
         </v-subheader>
         <br>
@@ -54,10 +54,22 @@
                                                     md="6"
                                                 >
                                                     <v-select
-                                                        v-model="form_data.status"
-                                                        :items="status"
-                                                        :rules="rules.status"
-                                                        label="Status"
+                                                        v-model="form_data.category_id"
+                                                        :items="categories"
+                                                        label="Category"
+                                                        outlined
+                                                        clearable
+                                                        @change="loadCategoryBrand"
+                                                    ></v-select>
+                                                </v-col>
+                                                <v-col
+                                                    cols="12"
+                                                    md="6"
+                                                >
+                                                    <v-select
+                                                        v-model="form_data.brand_id"
+                                                        :items="brands"
+                                                        label="Brand"
                                                         outlined
                                                         clearable
                                                     ></v-select>
@@ -65,13 +77,82 @@
 
                                                 <v-col
                                                     cols="12"
+                                                    md="12"
+                                                >
+                                                    <v-textarea
+                                                        v-model="form_data.short_description"
+                                                        label="Short Description"
+                                                        required
+                                                        outlined
+                                                        clearable
+                                                    ></v-textarea>
+                                                </v-col>
+
+                                                <v-col
+                                                    cols="12"
+                                                    md="12"
+                                                >
+                                                    <v-textarea
+                                                        v-model="form_data.description"
+                                                        label="Description"
+                                                        required
+                                                        outlined
+                                                        clearable
+                                                    ></v-textarea>
+                                                </v-col>
+
+                                                <v-col
+                                                    cols="12"
+                                                    md="6"
+                                                >
+                                                    <v-text-field
+                                                        v-model="form_data.price"
+                                                        :rules="rules.price"
+                                                        label="Price"
+                                                        type="number"
+                                                        required
+                                                        outlined
+                                                        clearable
+                                                    ></v-text-field>
+                                                </v-col>
+
+                                                <v-col
+                                                    cols="12"
+                                                    md="6"
+                                                >
+                                                    <v-text-field
+                                                        v-model="form_data.name"
+                                                        :rules="rules.name"
+                                                        label="Stock"
+                                                        type="number"
+                                                        required
+                                                        outlined
+                                                        clearable
+                                                    ></v-text-field>
+                                                </v-col>
+
+                                                <v-col
+                                                    cols="12"
+                                                    md="6"
+                                                >
+                                                    <v-text-field
+                                                        v-model="form_data.unit"
+                                                        label="Unit"
+                                                        required
+                                                        outlined
+                                                        clearable
+                                                    ></v-text-field>
+                                                </v-col>
+
+                                                <v-col
+                                                    cols="12"
                                                     md="6"
                                                 >
                                                     <v-select
-                                                        v-model="form_data.category_id"
-                                                        :items="categories"
-                                                        :rules="rules.category_id"
-                                                        label="Category"
+                                                        v-model="form_data.status"
+                                                        :items="status"
+                                                        :rules="rules.status"
+                                                        label="Status"
                                                         outlined
                                                         clearable
                                                     ></v-select>
@@ -140,11 +221,18 @@ export default {
         message:'',
         status: ['active', 'in-active'],
         categories: [],
+        brands: [],
         thumbnail_image_upload: false,
         banner_image_upload: false,
         form_data:{
             category_id:'',
+            brand_id:'',
             name:'',
+            short_description:'',
+            description:'',
+            price:'',
+            current_stock:'',
+            unit:'',
             status:'',
             thumbnail_image:'',
         },
@@ -158,8 +246,8 @@ export default {
             thumbnail_image: [
                 v => !!v || 'Thumbnail is required',
             ],
-            category_id: [
-                v => !!v || 'Category is required',
+            price: [
+                v => !!v || 'Price is required',
             ],
         },
     }),
@@ -210,7 +298,7 @@ export default {
                     return Promise.reject(error);
                 });
                 let token = JSON.parse(window.localStorage.getItem('token'))
-                await axios.post('/api/brand',this.form_data, {headers: { 'Authorization': 'Bearer ' + token }})
+                await axios.post('/api/product',this.form_data, {headers: { 'Authorization': 'Bearer ' + token }})
                     .then((response)=>{
                         if (response.data.status != 200){
                             this.message = response.data.message;
@@ -244,8 +332,28 @@ export default {
                         this.message = response.data.message;
                         this.error = true;
                     }else {
-                        console.log(response)
+                        //console.log(response)
                         this.categories = response.data.data.items
+                    }
+                })
+                .catch((error)=>{
+                    this.message = 'Something went wrong !';
+                    this.error = true;
+                })
+        },
+
+        async loadCategoryBrand(){
+            console.log(this.form_data.category_id)
+            let category_id = this.form_data.category_id
+            let token = JSON.parse(window.localStorage.getItem('token'))
+            await axios.get(`/api/product/all/category-brand/${category_id}`, {headers: { 'Authorization': 'Bearer ' + token }})
+                .then((response)=>{
+                    if (response.data.status != 200){
+                        this.message = response.data.message;
+                        this.error = true;
+                    }else {
+                        //console.log(response)
+                        this.brands = response.data.data.items
                     }
                 })
                 .catch((error)=>{
