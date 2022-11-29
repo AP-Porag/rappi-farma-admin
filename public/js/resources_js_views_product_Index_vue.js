@@ -309,6 +309,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         value: 'category.category_name',
         sortable: false
       }, {
+        text: 'Brand',
+        value: 'brand.brand_name',
+        sortable: false
+      }, {
         text: 'Thumbnail',
         value: 'thumb',
         sortable: false
@@ -1080,7 +1084,7 @@ var render = function () {
                                   staticClass: "datatable-search",
                                   attrs: {
                                     "append-icon": "mdi-magnify",
-                                    label: "Search...",
+                                    label: "Search with name or SKU...",
                                     "single-line": "",
                                     "hide-details": "",
                                   },
@@ -1101,7 +1105,7 @@ var render = function () {
                                     on: {
                                       click: function ($event) {
                                         return _vm.$router.push({
-                                          name: "create-product",
+                                          name: "add-stock",
                                         })
                                       },
                                     },
@@ -1219,7 +1223,7 @@ var render = function () {
                                 on: {
                                   click: function ($event) {
                                     return _vm.$router.push({
-                                      name: "edit-product",
+                                      name: "show-product",
                                       params: { id: item.id },
                                     })
                                   },

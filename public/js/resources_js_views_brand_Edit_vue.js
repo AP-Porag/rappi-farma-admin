@@ -244,7 +244,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       _this.form_data.name = response.data.item.name;
                       _this.form_data.status = response.data.item.status;
                       _this.form_data.thumbnail_image = response.data.item.thumb;
-                      _this.form_data.banner_image = response.data.item.banner;
                     }
                   }
                 })["catch"](function (error) {

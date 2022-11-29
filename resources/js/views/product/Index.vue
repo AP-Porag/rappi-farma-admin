@@ -66,7 +66,7 @@
                                 <v-text-field
                                     @input="datatableSearch"
                                     append-icon="mdi-magnify"
-                                    label="Search..."
+                                    label="Search with name or SKU..."
                                     single-line
                                     hide-details
                                     class="datatable-search"
@@ -76,7 +76,7 @@
                                     color="blue-grey darken-4"
                                     dark
                                     class="mb-2"
-                                    @click="$router.push({ name: 'create-product' })"
+                                    @click="$router.push({ name: 'add-stock' })"
                                     link
                                 >
                                     Add Stock
@@ -114,7 +114,7 @@
                             <v-btn icon color="blue" @click="$router.push({ name: 'edit-product',params:{id:item.id} })">
                                 <v-icon small>mdi-pencil</v-icon>
                             </v-btn>
-                            <v-btn icon color="yellow darken-4" @click="$router.push({ name: 'edit-product',params:{id:item.id} })">
+                            <v-btn icon color="yellow darken-4" @click="$router.push({ name: 'show-product',params:{id:item.id} })">
                                 <v-icon small>mdi-eye</v-icon>
                             </v-btn>
                             <v-btn
@@ -185,6 +185,7 @@ export default {
                     value: 'name',
                 },
                 {text: 'Category', value: 'category.category_name',sortable: false},
+                {text: 'Brand', value: 'brand.brand_name',sortable: false},
                 {text: 'Thumbnail', value: 'thumb',sortable: false},
                 {text: 'Current Stock', value: 'current_stock',sortable: false},
                 {text: 'Price', value: 'price',sortable: false},

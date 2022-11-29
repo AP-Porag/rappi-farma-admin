@@ -214,7 +214,6 @@ export default {
                             this.form_data.name = response.data.item.name;
                             this.form_data.status = response.data.item.status;
                             this.form_data.thumbnail_image = response.data.item.thumb;
-                            this.form_data.banner_image = response.data.item.banner;
                         }
 
                     }

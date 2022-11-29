@@ -222,7 +222,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3026,7 +3025,6 @@ var render = function () {
                                                 [
                                                   _c("v-text-field", {
                                                     attrs: {
-                                                      rules: _vm.rules.name,
                                                       label: "Stock",
                                                       type: "number",
                                                       required: "",
@@ -3034,16 +3032,18 @@ var render = function () {
                                                       clearable: "",
                                                     },
                                                     model: {
-                                                      value: _vm.form_data.name,
+                                                      value:
+                                                        _vm.form_data
+                                                          .current_stock,
                                                       callback: function ($$v) {
                                                         _vm.$set(
                                                           _vm.form_data,
-                                                          "name",
+                                                          "current_stock",
                                                           $$v
                                                         )
                                                       },
                                                       expression:
-                                                        "form_data.name",
+                                                        "form_data.current_stock",
                                                     },
                                                   }),
                                                 ],

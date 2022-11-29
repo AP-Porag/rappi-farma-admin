@@ -30,6 +30,8 @@ const BrandEdit = () => import('../views/brand/Edit.vue')
 const ProductIndex = () => import('../views/product/Index.vue')
 const ProductCreate = () => import('../views/product/Create.vue')
 const ProductEdit = () => import('../views/product/Edit.vue')
+const ProductShow = () => import('../views/product/Show.vue')
+const ProductAddStock = () => import('../views/product/AddStock.vue')
 
 Vue.use(vueRouter);
 
@@ -149,6 +151,18 @@ const router = new vueRouter({
                     name:'edit-product',
                     meta:{title:'Edit product'},
                     component: ProductEdit
+                },
+                {
+                    path:'show-product/:id',
+                    name:'show-product',
+                    meta:{title:'Show product'},
+                    component: ProductShow
+                },,
+                {
+                    path:'add-stock',
+                    name:'add-stock',
+                    meta:{title:'Add stock'},
+                    component: ProductAddStock
                 },
 
             ],

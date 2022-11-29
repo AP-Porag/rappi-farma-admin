@@ -40,7 +40,12 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $SKU = 000;
+        //category_id,name,slug,short_description,description,price,SKU,thumbnail
+        $lastSKU = Product::orderBy('id', 'DESC')->first()->SKU;
+        $SKU = $lastSKU+1;
+
+        $SKU = sprintf('%010d', $SKU);
+
         $item = Product::create([
             'category_id'=>$request->category_id,
             'brand_id'=>$request->brand_id,
@@ -102,6 +107,11 @@ class ProductController extends Controller
         $item->brand_id = $request->brand_id;
         $item->name = $request->name;
         $item->slug = Str::slug($request->name);
+        $item->short_description = $request->short_description;
+        $item->description = $request->description;
+        $item->price = $request->price;
+        $item->current_stock = $request->current_stock;
+        $item->unit = $request->unit;
         $item->status = $request->status;
         $item->save();
 
@@ -162,6 +172,7 @@ class ProductController extends Controller
     public function datatableSearch(Request $request,$text)
     {
         $items = Product::where("name","LIKE","%$text%")
+            ->orWhere('SKU',$text)
             ->paginate($request->per_page);
         $items = ProductResource::collection($items);
         $total = Product::count();
@@ -179,6 +190,21 @@ class ProductController extends Controller
         $items = VSelectResource::collection($items);
 
         $total = $items->count();
+        $data = [
+            "items"=>$items,
+            "total"=>$total
+        ];
+
+        return response()->json(['status'=>200,'data'=>$data]);
+    }
+
+    public function searchProductForAddStock($text)
+    {
+        $items = Product::where("name","LIKE","%$text%")
+            ->orWhere('SKU',$text)
+            ->get();
+        $items = ProductResource::collection($items);
+        $total = Product::count();
         $data = [
             "items"=>$items,
             "total"=>$total

@@ -16,17 +16,19 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['name'=>'Todos','thumbnail'=>'https://laravel.com/'],
-            ['name'=>'OFERTAS HASTA DICIEMBRE','thumbnail'=>'https://expressjs.com/'],
-            ['name'=>'OCTUBRE ROSA','thumbnail'=>'https://nodejs.org'],
-            ['name'=>'OFERTAS DEL MES','thumbnail'=>'https://reactjs.org/'],
-            ['name'=>'Health & Medicine','thumbnail'=>'https://reactjs.org/'],
+            ['name'=>'Todos','thumbnail'=>'','banner'=>''],
+            ['name'=>'OFERTAS HASTA DICIEMBRE','thumbnail'=>'','banner'=>''],
+            ['name'=>'OCTUBRE ROSA','thumbnail'=>'','banner'=>''],
+            ['name'=>'OFERTAS DEL MES','thumbnail'=>'','banner'=>''],
+            ['name'=>'Health & Medicine','thumbnail'=>'','banner'=>''],
         ];
         foreach ($categories as $category){
             $items = [
                 [
                     'name'        => $category['name'],
                     'slug'        => Str::slug($category['name']),
+                    'thumbnail'      => $category['thumbnail'],
+                    'banner'      => $category['banner'],
                     'status'      => 'active',
                 ],
             ];

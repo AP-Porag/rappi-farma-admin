@@ -121,8 +121,7 @@
                                                     md="6"
                                                 >
                                                     <v-text-field
-                                                        v-model="form_data.name"
-                                                        :rules="rules.name"
+                                                        v-model="form_data.current_stock"
                                                         label="Stock"
                                                         type="number"
                                                         required

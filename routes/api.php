@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function (){
     //product
     Route::resource('product',ProductController::class)->except('create','edit');
     Route::get('/product/search-product/{text}',[ProductController::class,'datatableSearch']);
+    Route::get('/product/search-product-for-stock-add/{text}',[ProductController::class,'searchProductForAddStock']);
     Route::get('/product/all/category-brand/{category_id}',[ProductController::class,'allBrandForCategory']);
 
 });
