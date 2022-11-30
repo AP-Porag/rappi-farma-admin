@@ -28,7 +28,7 @@
                 </v-card>
                 <v-card v-if="items.length > 0" class="scroll">
                     <v-list-item-group>
-                        <v-list-item v-for="item in items" :key="item.id" @click="itemSelected(item.id,item.name)">
+                        <v-list-item v-for="item in items" :key="item.id" @click="itemSelected(item.id,item.name,item.thumb)">
                             <v-list-item-avatar>
                                 <v-img
                                     aspect-ratio="30"
@@ -58,10 +58,11 @@
                         <v-card-title>Product list to add stock</v-card-title>
                         <v-btn @click="resetProductList" class="mt-4" dark>Reset</v-btn>
                     </div>
-                    <v-simple-table>
-                        <template v-slot:default>
-                            <thead>
-                            <tr>
+                    <v-form v-model="valid">
+                        <v-simple-table>
+                            <template v-slot:default>
+                                <thead>
+                                    <tr>
                                 <th class="text-left">
                                     Name
                                 </th>
@@ -72,47 +73,49 @@
                                     Action
                                 </th>
                             </tr>
-                            </thead>
-                            <tbody v-if="form_data.products.length > 0">
+                                </thead>
+                                <tbody v-if="form_data.products.length > 0">
                                     <tr v-for="(product,index) in form_data.products" :key="product.id">
-                                        <td>{{product.name}}</td>
-                                        <td>
-                                            <v-text-field
-                                                v-model="product.quantity"
-                                                :rules="rules.quantity"
-                                                label="Quantity"
-                                                required
-                                                clearable
-                                            ></v-text-field>
-                                        </td>
-                                        <td>
-                                            <v-tooltip bottom>
-                                                <template v-slot:activator="{ on, attrs }">
-                                                    <v-btn
-                                                        color="red lighten-2"
-                                                        dark
-                                                        icon
-                                                        @click="removeProduct(index)"
-                                                        v-bind="attrs"
-                                                        v-on="on"
-                                                    >
-                                                        <v-icon small>mdi-delete</v-icon>
-                                                    </v-btn>
-                                                </template>
-                                                <span>Remove</span>
-                                            </v-tooltip>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-right">
-                                        <td colspan="100">
-                                            <v-btn :loading="loading" type="submit" color="indigo" @click="submit">
-                                                <span class="white--text px-8">Save</span>
+                                <td>{{product.name}}</td>
+                                <td>
+                                    <v-text-field
+                                        class="product_quantity"
+                                        v-model="product.quantity"
+                                        :rules="rules.quantity"
+                                        label="Quantity"
+                                        required
+                                        clearable
+                                    ></v-text-field>
+                                </td>
+                                <td>
+                                    <v-tooltip bottom>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-btn
+                                                color="red lighten-2"
+                                                dark
+                                                icon
+                                                @click="removeProduct(index)"
+                                                v-bind="attrs"
+                                                v-on="on"
+                                            >
+                                                <v-icon small>mdi-delete</v-icon>
                                             </v-btn>
-                                        </td>
-                                    </tr>
-                            </tbody>
-                        </template>
-                    </v-simple-table>
+                                        </template>
+                                        <span>Remove</span>
+                                    </v-tooltip>
+                                </td>
+                            </tr>
+                                    <tr class="text-right">
+                                <td colspan="100">
+                                    <v-btn :loading="loading" type="button" color="indigo" @click="submit">
+                                        <span class="white--text px-8">Save</span>
+                                    </v-btn>
+                                </td>
+                            </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </v-form>
                 </v-card>
             </v-col>
         </v-row>
@@ -136,7 +139,7 @@ export default {
         },
 
         form_data:{
-            products:[]
+            products:[],
         }
     }),
     methods:{
@@ -164,13 +167,12 @@ export default {
 
         },
 
-        itemSelected(id,name){
+        itemSelected(id,name,thumb){
             let obj = {
                 'id':id,
                 'name':name,
+                'image':thumb,
                 'quantity':'',
-                'status':'stock-in',
-                'remark':'stock-add',
             };
 
             this.form_data.products.push(obj)
@@ -211,7 +213,7 @@ export default {
                     return Promise.reject(error);
                 });
                 let token = JSON.parse(window.localStorage.getItem('token'))
-                await axios.post('/api/product',this.form_data, {headers: { 'Authorization': 'Bearer ' + token }})
+                await axios.post('/api/stock/stock-add',this.form_data, {headers: { 'Authorization': 'Bearer ' + token }})
                     .then((response)=>{
                         if (response.data.status != 200){
                             this.message = response.data.message;
@@ -250,5 +252,8 @@ export default {
 .datatable-search{
     margin-left: 15px;
     margin-right: 15px;
+}
+.product_quantity{
+    width: 150px;
 }
 </style>

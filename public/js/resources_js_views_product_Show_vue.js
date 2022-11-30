@@ -191,17 +191,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Edit",
+  name: "Show",
   components: {
     'thumbnail-upload': vue_image_crop_upload_upload_2__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -213,11 +206,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       loading: false,
       message: '',
       item: '',
+      stocks: [],
       tab: null
     };
   },
   created: function created() {
     this.getItemData();
+    this.getProductStockHistory();
   },
   methods: {
     getItemData: function getItemData() {
@@ -276,6 +271,64 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    getProductStockHistory: function getProductStockHistory() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var token;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                // Add a request interceptor
+                axios.interceptors.request.use(function (config) {
+                  // Do something before request is sent
+                  _this2.loading = true;
+                  return config;
+                }, function (error) {
+                  // Do something with request error
+                  _this2.loading = false;
+                  _this2.message = error.data.status;
+                  _this2.error = true;
+                  return Promise.reject(error);
+                });
+
+                // Add a response interceptor
+                axios.interceptors.response.use(function (response) {
+                  _this2.loading = false;
+                  return response;
+                }, function (error) {
+                  _this2.loading = false;
+                  _this2.message = error.data.status;
+                  _this2.error = true;
+                  return Promise.reject(error);
+                });
+                token = JSON.parse(window.localStorage.getItem('token'));
+                _context2.next = 5;
+                return axios.get("/api/product/stock-history/".concat(_this2.$route.params.id), {
+                  headers: {
+                    'Authorization': 'Bearer ' + token
+                  }
+                }).then(function (response) {
+                  if (response.data.status != 200) {
+                    _this2.message = response.data.message;
+                    _this2.error = true;
+                  } else {
+                    if (response.data.data.items != null) {
+                      _this2.stocks = response.data.data.items;
+                    }
+                  }
+                })["catch"](function (error) {
+                  _this2.message = 'Something went wrong !';
+                  _this2.error = true;
+                });
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
@@ -2662,7 +2715,11 @@ var render = function () {
                                 _vm._v(" "),
                                 _c("td", [
                                   _vm._v(
-                                    _vm._s(_vm.item.category.category_name)
+                                    _vm._s(
+                                      _vm.item.category.category_name
+                                        ? _vm.item.category.category_name
+                                        : ""
+                                    )
                                   ),
                                 ]),
                               ]),
@@ -2671,7 +2728,13 @@ var render = function () {
                                 _c("td", [_vm._v("Brand")]),
                                 _vm._v(" "),
                                 _c("td", [
-                                  _vm._v(_vm._s(_vm.item.brand.brand_name)),
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.item.brand.brand_name
+                                        ? _vm.item.brand.brand_name
+                                        : ""
+                                    )
+                                  ),
                                 ]),
                               ]),
                               _vm._v(" "),
@@ -2889,15 +2952,24 @@ var render = function () {
                                   _c(
                                     "v-timeline",
                                     { attrs: { "align-top": "", dense: "" } },
-                                    [
-                                      _c(
+                                    _vm._l(_vm.stocks, function (stock) {
+                                      return _c(
                                         "v-timeline-item",
                                         {
-                                          attrs: { color: "indigo", small: "" },
+                                          key: stock.id,
+                                          attrs: {
+                                            color:
+                                              stock.remark === "stock-add"
+                                                ? "green darken-4"
+                                                : stock.remark === "stock-sell"
+                                                ? "indigo darken-4"
+                                                : "red darken-4",
+                                            small: "",
+                                          },
                                         },
                                         [
                                           _c("strong", [
-                                            _vm._v("5 Minuts ago"),
+                                            _vm._v(_vm._s(stock.created_ago)),
                                           ]),
                                           _vm._v(" "),
                                           _c(
@@ -2905,59 +2977,45 @@ var render = function () {
                                             { staticClass: "text-caption" },
                                             [
                                               _vm._v(
-                                                "\n                                            You have new order please check this out\n                                        "
+                                                "\n                                            Quantity : " +
+                                                  _vm._s(stock.quantity) +
+                                                  "\n                                        "
                                               ),
                                             ]
                                           ),
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-timeline-item",
-                                        {
-                                          attrs: { color: "green", small: "" },
-                                        },
-                                        [
-                                          _c("strong", [
-                                            _vm._v("35 Minuts ago"),
-                                          ]),
                                           _vm._v(" "),
                                           _c(
                                             "div",
                                             {
-                                              staticClass: "text-caption mb-2",
+                                              staticClass:
+                                                "text-caption text-capitalize",
                                             },
                                             [
                                               _vm._v(
-                                                "\n                                            A Product has delivered!\n                                        "
+                                                "\n                                            Status : " +
+                                                  _vm._s(stock.status) +
+                                                  "\n                                        "
                                               ),
                                             ]
                                           ),
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-timeline-item",
-                                        {
-                                          attrs: { color: "indigo", small: "" },
-                                        },
-                                        [
-                                          _c("strong", [
-                                            _vm._v("44 Minuts ago"),
-                                          ]),
                                           _vm._v(" "),
                                           _c(
                                             "div",
-                                            { staticClass: "text-caption" },
+                                            {
+                                              staticClass:
+                                                "text-caption text-capitalize",
+                                            },
                                             [
                                               _vm._v(
-                                                "\n                                            You have new order please check this out\n                                        "
+                                                "\n                                            Remark : " +
+                                                  _vm._s(stock.remark) +
+                                                  "\n                                        "
                                               ),
                                             ]
                                           ),
                                         ]
-                                      ),
-                                    ],
+                                      )
+                                    }),
                                     1
                                   ),
                                 ],

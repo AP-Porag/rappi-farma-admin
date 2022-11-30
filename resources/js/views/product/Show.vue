@@ -72,11 +72,11 @@
                             </tr>
                             <tr>
                                 <td>Category</td>
-                                <td>{{ item.category.category_name }}</td>
+                                <td>{{ item.category.category_name ? item.category.category_name : '' }}</td>
                             </tr>
                             <tr>
                                 <td>Brand</td>
-                                <td>{{ item.brand.brand_name }}</td>
+                                <td>{{ item.brand.brand_name ? item.brand.brand_name : '' }}</td>
                             </tr>
                             <tr>
                                 <td>Image</td>
@@ -150,23 +150,16 @@
                                 <v-card-title class="ml-11 indigo--text">Stock history</v-card-title>
                                 <v-card-text class="py-5">
                                     <v-timeline align-top dense>
-                                        <v-timeline-item color="indigo" small>
-                                            <strong>5 Minuts ago</strong>
+                                        <v-timeline-item :color="stock.remark === 'stock-add' ? 'green darken-4' : (stock.remark === 'stock-sell' ? 'indigo darken-4' : 'red darken-4')" small v-for="stock in stocks" :key="stock.id">
+                                            <strong>{{stock.created_ago}}</strong>
                                             <div class="text-caption">
-                                                You have new order please check this out
+                                                Quantity : {{stock.quantity}}
                                             </div>
-                                        </v-timeline-item>
-                                        <v-timeline-item color="green" small>
-                                            <strong>35 Minuts ago</strong>
-                                            <div class="text-caption mb-2">
-                                                A Product has delivered!
+                                            <div class="text-caption text-capitalize">
+                                                Status : {{stock.status}}
                                             </div>
-                                        </v-timeline-item>
-
-                                        <v-timeline-item color="indigo" small>
-                                            <strong>44 Minuts ago</strong>
-                                            <div class="text-caption">
-                                                You have new order please check this out
+                                            <div class="text-caption text-capitalize">
+                                                Remark : {{stock.remark}}
                                             </div>
                                         </v-timeline-item>
                                     </v-timeline>
@@ -183,7 +176,7 @@
 <script>
 import upload from "vue-image-crop-upload/upload-2";
 export default {
-    name: "Edit",
+    name: "Show",
     components: {
         'thumbnail-upload': upload,
     },
@@ -194,10 +187,12 @@ export default {
         loading:false,
         message:'',
         item:'',
+        stocks:[],
         tab: null,
     }),
     created() {
         this.getItemData();
+        this.getProductStockHistory();
     },
     methods:{
         async getItemData(){
@@ -233,6 +228,49 @@ export default {
                     }else {
                         if (response.data.item != null){
                             this.item = response.data.item;
+                        }
+
+                    }
+                })
+                .catch((error)=>{
+                    this.message = 'Something went wrong !';
+                    this.error = true;
+                })
+        },
+
+        async getProductStockHistory(){
+            // Add a request interceptor
+            axios.interceptors.request.use((config)=> {
+                // Do something before request is sent
+                this.loading = true;
+                return config;
+            },  (error) => {
+                // Do something with request error
+                this.loading = false;
+                this.message = error.data.status
+                this.error = true;
+                return Promise.reject(error);
+            });
+
+            // Add a response interceptor
+            axios.interceptors.response.use((response) => {
+                this.loading = false;
+                return response;
+            },  (error) => {
+                this.loading = false;
+                this.message = error.data.status
+                this.error = true;
+                return Promise.reject(error);
+            });
+            let token = JSON.parse(window.localStorage.getItem('token'))
+            await axios.get(`/api/product/stock-history/${this.$route.params.id}`, {headers: { 'Authorization': 'Bearer ' + token }})
+                .then((response)=>{
+                    if (response.data.status != 200){
+                        this.message = response.data.message;
+                        this.error = true;
+                    }else {
+                        if (response.data.data.items != null){
+                            this.stocks = response.data.data.items;
                         }
 
                     }

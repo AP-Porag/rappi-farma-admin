@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api\Admin\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductStockResource;
 use App\Http\Resources\VSelectResource;
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\ProductStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -205,6 +207,21 @@ class ProductController extends Controller
             ->get();
         $items = ProductResource::collection($items);
         $total = Product::count();
+        $data = [
+            "items"=>$items,
+            "total"=>$total
+        ];
+
+        return response()->json(['status'=>200,'data'=>$data]);
+    }
+
+    public function getProductHistory($product_id)
+    {
+        $items = ProductStock::where('product_id',$product_id)->orderBy('created_at','DESC')->limit(8)->get();
+
+        $items = ProductStockResource::collection($items);
+
+        $total = $items->count();
         $data = [
             "items"=>$items,
             "total"=>$total
